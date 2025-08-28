@@ -1,0 +1,16 @@
+{
+    "name": "redscope/rs-tech-brandstyle",
+    "description": "rs-tech",
+    "autoload": {
+        "psr-4": {
+            "Redscope\\RsTechBrandstyle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sett Sarverott",
+            "email": "sarverott@gmail.com"
+        }
+    ],
+    "require": {}
+}

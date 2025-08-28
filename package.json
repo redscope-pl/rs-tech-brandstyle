@@ -1,0 +1,27 @@
+{
+  "name": "rs-tech-brandstyle",
+  "version": "1.0.0",
+  "description": "RedScope Technologies brand style bundle",
+  "keywords": [
+    "redscope",
+    "pl",
+    "rs-tech",
+    "technologies",
+    "ai"
+  ],
+  "homepage": "https://github.com/redscope-pl/rs-tech-brandstyle#readme",
+  "bugs": {
+    "url": "https://github.com/redscope-pl/rs-tech-brandstyle/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redscope-pl/rs-tech-brandstyle.git"
+  },
+  "license": "SEE LICENSE IN ./LICENSE",
+  "author": "Sett Sarverott",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "task"
+  }
+}
