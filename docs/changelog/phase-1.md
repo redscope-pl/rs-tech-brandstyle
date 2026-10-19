@@ -86,3 +86,135 @@ a small, noisy PNG. Is there an original vector file (the designer's)?
   committed; `task check` fails when they are stale. Reusable notices in
   `docs/legal/` (`COPYRIGHT.md`, `TRADEMARK.md`); the pack carries them.
 - The vision draft became `docs/devlog/VISION.md`, and Phase 3 of TODO.
+
+## UNIXUSAT=1792442554488 · commit 17340c8
+
+### The author's orders, second batch (word for word)
+
+> ### Q4
+> let's replace font into terminal-like basic that can be found in system's library of fonts. whole stuff like logo and logotyping will be soon changed but not yet - keep it inmind that it will be similar but not same.
+>
+> ### Q9
+>
+> - tumblr blog with images to be hosted:
+>     - https://redscope.tumblr.com/
+> - blogger blog with articles and news:
+>     - origin url from blogger = `redscopetech.blogspot.com`
+>     - changed to domain: https://blog.redscope.online/
+>
+> ### Q10
+> copyright holder is me (e.g. Sett Sarverott A.A.B.) as the author, but i made it for my yet unregistered business "RedScope Technologies" - it still is in the middle of preparations to become commercial entity.
+> We can make that as main holder of rights in here, later i will create holded by NFT ownership company shares.
+> Either way
+>
+> ### Q7
+> for readthedocs let's try Sphinx first. in future moves we gonna add mkdocs also.
+>
+> ### Q5
+> add package for npm installations. we want to be able integrate basic stylization. we will gonna separate vue, react, astro and bare vanilla web projects approaches. but yea **not now** - keep it for later.
+>
+> ### Q8
+> i see. then we will gonna just place there base customization.
+>
+> ### Q6
+> yep, option `c)` fits for me
+
+### Answered questions (moved from BRAINSTORM.md word for word)
+
+#### Q4: a brand font
+
+The words of the logo are lettering (a cut R, T, E), not a font the pages
+can use. Pages use the system font now.
+
+- a) system fonts (no files, nothing to load)
+- b) a self-hosted open font close to the lettering (OFL)
+
+*Lean:* a) until there is a reason.
+
+**Decision:** see Q4 in the batch above.
+
+#### Q5: npm package
+
+The old `package.json` named the pack for npm. Publishing to npm is outward
+and permanent.
+
+*Lean:* not now; the tarball release is enough for the zone.
+
+**Decision:** see Q5 in the batch above.
+
+#### Q6: where the starting packets live
+
+The vision asks for starting packets: GitBook, Read the Docs, GitHub Pages
+(Vue, React, Astro), Tumblr, Blogger.
+
+- a) here, `starters/<platform>/`, each minimal, built and checked with the pack
+- b) one template repository per starter in the scope (GitHub "template
+  repository"), each pulling a pinned pack release
+- c) a) first, b) once a starter is used for real
+
+*Lean:* c): one place to keep them in step while the pack changes fast.
+
+**Decision:** see Q6 in the batch above.
+
+#### Q7: Read the Docs: which documentation tool
+
+Read the Docs builds Sphinx and MkDocs (and others). Each needs its own theme.
+
+- a) MkDocs with Material (an `extra.css` and the logo)
+- b) Sphinx with Furo (CSS variables, light and dark)
+- c) both
+
+*Lean:* a): Markdown like the rest of our docs; Material has light/dark and
+takes CSS variables.
+
+**Decision:** see Q7 in the batch above.
+
+#### Q8: GitBook
+
+Hosted GitBook takes the brand through its settings (primary colour, logo,
+favicon, fonts from a list), not through CSS. The packet would be the values
+and files to enter, and a guide.
+
+*Lean:* that, unless there is a self-hosted GitBook (legacy CLI) in use.
+
+**Decision:** see Q8 in the batch above.
+
+#### Q9: Tumblr and Blogger blogs
+
+Which blogs will wear the themes (their addresses), and what they publish
+(text, pictures, both)? A theme is tried only by installing it on a blog,
+which needs the account owner.
+
+*Lean:* full minimal themes (Tumblr HTML with its blocks, Blogger XML), light
+and dark from the visitor's scheme; the author installs them on a test blog
+first.
+
+**Decision:** see Q9 in the batch above.
+
+#### Q10: the copyright holder
+
+The notices say "© Sett Sarverott A.A.B. (RedScope Technologies)". Is
+RedScope Technologies a registered business that should hold the rights
+itself (its full legal name, registry number)?
+
+*Lean:* keep the wording until the author names the entity.
+
+**Decision:** see Q10 in the batch above.
+
+### What was done with them
+
+- Q4: the text font is a terminal-like monospace from the system's fonts
+  (`--rs-font-text`), no font files. The logo and lettering will change
+  soon, similar but not the same: the logo pipeline keeps no assumption
+  beyond the masters and two crop constants in `scripts/build.py`.
+- Q5: an npm package, split for Vue, React, Astro and vanilla web projects,
+  goes to Later in TODO.
+- Q6: option c): starters live here in `starters/`, template repositories
+  once one is used for real.
+- Q7: Read the Docs with Sphinx first (Furo theme); MkDocs later.
+- Q8: GitBook gets the base customization: values and files to enter.
+- Q9: Tumblr `redscope.tumblr.com` (images), Blogger `blog.redscope.online`
+  (articles and news; origin `redscopetech.blogspot.com`).
+- Q10: notices name RedScope Technologies (a business in preparation) as
+  the holder and Sett Sarverott A.A.B. as the author, exercising the rights
+  until the entity exists.

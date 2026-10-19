@@ -25,5 +25,8 @@ Principles:
   from it and pinned by version and hash.
 - Code and stylesheets open (MPL-2.0); images and brand signs ours (all
   rights reserved).
-- Nothing loaded from third parties on our pages.
+- Nothing loaded from third parties on our pages; fonts are the system's
+  own, terminal-like.
+- The logo and lettering will change (similar, not the same): nothing may
+  depend on the current drawing beyond its master files.
 - A theme counts as done when it was seen working on the real platform.

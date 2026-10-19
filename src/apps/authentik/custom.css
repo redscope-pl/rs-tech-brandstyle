@@ -10,8 +10,8 @@
   --pf-global--link--Color: var(--rs-accent);
   --pf-global--link--Color--hover: var(--rs-accent-hover);
   --pf-global--active-color--100: var(--rs-accent);
-  --pf-global--FontFamily--sans-serif: var(--rs-font-sans);
-  --pf-global--FontFamily--heading--sans-serif: var(--rs-font-sans);
+  --pf-global--FontFamily--sans-serif: var(--rs-font-text);
+  --pf-global--FontFamily--heading--sans-serif: var(--rs-font-text);
   --pf-global--FontFamily--monospace: var(--rs-font-mono);
   --ak-dark-background: var(--rs-dark-bg);
   --ak-dark-background-light: var(--rs-dark-surface);

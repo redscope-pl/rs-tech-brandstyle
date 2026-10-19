@@ -8,8 +8,14 @@ Technologies and fill in the two marked lines.
 **Project:** rs-tech-brandstyle  <!-- the project's name -->
 **Years:** 2025–2026  <!-- first year – last change -->
 
-© Sett Sarverott A.A.B. (RedScope Technologies). Author's ORCID:
-<https://orcid.org/0009-0006-4604-6540>.
+© RedScope Technologies.
+
+- **Holder of the rights:** RedScope Technologies, a business being
+  prepared by its founder and not yet registered. Until it exists as an
+  entity, the rights are held and exercised by the author below; they pass
+  to the entity when it is registered.
+- **Author:** Sett Sarverott A.A.B., ORCID
+  <https://orcid.org/0009-0006-4604-6540>.
 
 ## What is under which terms
 

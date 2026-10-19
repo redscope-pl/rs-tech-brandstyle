@@ -65,7 +65,7 @@ def tokens_css(tokens: dict) -> str:
     for scheme in ("light", "dark"):
         for k, ref in tokens[scheme].items():
             fixed += [f"--rs-{scheme}-{k}{s}: var(--rs-{ref}{s});" for s in ("", "-rgb")]
-    fixed += [f"--rs-font-{k}: {v};" for k, v in tokens["font"].items()]
+    fixed += [f"--rs-font-{k}: {v};" for k, v in tokens["font"].items() if not k.startswith("$")]
     fixed += [f"--rs-radius-{k}: {v};" for k, v in tokens["radius"].items()]
 
     def follow(scheme: str) -> list[str]:

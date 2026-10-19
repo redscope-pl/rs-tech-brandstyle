@@ -58,5 +58,6 @@ tarball by version and hash.
   [docs/legal/TRADEMARK.md](docs/legal/TRADEMARK.md); a code licence gives
   no right to them.
 
-© 2025–2026 [Sett Sarverott A.A.B.](https://orcid.org/0009-0006-4604-6540)
-(RedScope Technologies), [docs/legal/COPYRIGHT.md](docs/legal/COPYRIGHT.md).
+© 2025–2026 RedScope Technologies, author
+[Sett Sarverott A.A.B.](https://orcid.org/0009-0006-4604-6540)
+([docs/legal/COPYRIGHT.md](docs/legal/COPYRIGHT.md)).

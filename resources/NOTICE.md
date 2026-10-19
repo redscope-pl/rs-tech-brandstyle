@@ -1,8 +1,8 @@
 # Images and media: all rights reserved
 
 Everything under `resources/` (in the built pack: `icons/`, `images/` and
-any `media/`) is © 2025–2026 Sett Sarverott A.A.B. (RedScope Technologies).
-All rights reserved.
+any `media/`) is © 2025–2026 RedScope Technologies, author Sett Sarverott
+A.A.B. (holder and author: `legal/COPYRIGHT.md`). All rights reserved.
 
 These files are **not** under the Mozilla Public License 2.0 that covers
 the code and stylesheets of this repository. The logo and the name
