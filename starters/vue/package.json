@@ -1,0 +1,20 @@
+{
+  "name": "rs-starter-vue",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A vue starter in the RedScope Technologies style (rs-tech-brandstyle @@RS_VERSION@@)",
+  "license": "MPL-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.44"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.10",
+    "vite": "^8.3.4"
+  }
+}

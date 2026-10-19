@@ -34,7 +34,8 @@ uv sync                  # tools from PyPI: task, commitizen, lefthook, yamllint
 uv run task setup        # + lefthook git hooks
 uv run task build        # dist/rs-tech-brandstyle/ + reproducible tarball
 uv run task resources    # redraw icons and light/dark logos in resources/ (commit them)
-uv run task check        # tokens, contrast, SVGs, resources fresh, two builds compared, YAML, commits (= CI)
+uv run task check        # tokens, contrast, SVGs, resources fresh, two builds compared, starters, YAML, commits (= CI)
+uv run task check:starters   # build Sphinx, Vue, React, Astro starters from a fresh pack (npm)
 uv run task preview      # build, then open docs/preview.html
 ```
 
@@ -60,7 +61,10 @@ resources/             images and media, all rights reserved (NOTICE.md):
   media/               sound and video, when there is any
 src/apps/<app>/        per-app files, laid out as the app expects them
 scripts/build.py       src/ -> dist/ (tokens into every stylesheet, icons, manifest, tarball)
+starters/<platform>/   starting packets (sphinx, gitbook, tumblr, blogger, vue, react, astro);
+                       placeholders @@RS_…@@ and brand/ are put in by the build
 tests/check.py         the pack's checks
+tests/starters.py      builds the starters that can be built offline
 docs/                  usage, preview page
 docs/legal/            copyright and trademark notices (reusable, shipped in the pack)
 docs/devlog/           VISION, TODO, BRAINSTORM, ORDERS

@@ -19,6 +19,11 @@ jobs:
 
       - uses: astral-sh/setup-uv@v6
 
+      # The Vue, React and Astro starters are built by check:starters.
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
       - name: Install tools
         run: uv sync --frozen
 

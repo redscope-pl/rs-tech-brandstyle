@@ -22,6 +22,7 @@ hand.
 | `authentik/`                 | The brand's custom CSS and a flow background                   |
 | `gitea/public/`              | Themes `redscope-auto/light/dark` and logos, for Gitea's `custom/` |
 | `vaultwarden/templates/`     | The web vault's own CSS                                        |
+| `starters/`                  | Starting packets: Sphinx (Read the Docs), GitBook, Tumblr, Blogger, Vue, React, Astro (GitHub Pages); [starters/README.md](starters/README.md) |
 | `LICENSE`, `NOTICE.md`, `legal/` | MPL-2.0 for the code; images all rights reserved; copyright and trademark notices |
 
 How each app takes its part: [docs/usage.md](docs/usage.md).
@@ -34,7 +35,7 @@ the built pack.
 uv sync              # tools from PyPI: task, commitizen, lefthook, yamllint, Pillow
 uv run task setup    # + git hooks
 uv run task build    # dist/
-uv run task check    # tokens, WCAG contrast, SVGs, two builds compared, YAML, commits (= CI)
+uv run task check    # tokens, contrast, resources, two builds, starters built (needs npm), YAML, commits (= CI)
 ```
 
 Change colours in `src/tokens.json` only. App themes in `src/apps/` use the

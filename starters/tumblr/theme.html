@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- Tumblr theme in the RedScope style (rs-tech-brandstyle @@RS_VERSION@@),
+     for redscope.tumblr.com, a blog of images: a grid of posts, a page per
+     post. Paste as a whole into Edit theme → Edit HTML. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{Title}{block:PostSummary} · {PostSummary}{/block:PostSummary}</title>
+{block:Description}<meta name="description" content="{MetaDescription}">{/block:Description}
+<link rel="shortcut icon" href="{Favicon}">
+<link rel="alternate" type="application/rss+xml" href="{RSS}">
+<style>
+@@RS_TOKENS_CSS@@
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--rs-bg); color: var(--rs-fg);
+  font: 15px/1.55 var(--rs-font-text);
+}
+a { color: var(--rs-accent); text-decoration: none; }
+a:hover { color: var(--rs-accent-hover); text-decoration: underline; }
+header, main, nav.pages, footer { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+header { display: flex; align-items: center; gap: 1rem; padding-top: 2rem; padding-bottom: 1.5rem; }
+header svg { height: 3rem; width: auto; flex: none; }
+header h1 { font-size: 1.4rem; margin: 0; letter-spacing: .04em; }
+header h1 a { color: var(--rs-fg); }
+header p { margin: .2rem 0 0; color: var(--rs-muted); }
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+.post {
+  background: var(--rs-surface); border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius-md); overflow: hidden;
+}
+.post img { display: block; width: 100%; height: auto; }
+.post .body { padding: .75rem 1rem; }
+.post .body p { margin: .4rem 0; }
+.post h2 { font-size: 1.05rem; margin: 0 0 .4rem; }
+.meta { font-size: .8rem; color: var(--rs-muted); padding: 0 1rem .75rem; }
+.meta a { color: var(--rs-muted); }
+.tags a { color: var(--rs-highlight); margin-right: .5rem; }
+.permalink .grid { grid-template-columns: 1fr; max-width: 48rem; margin: 0 auto; }
+nav.pages { display: flex; justify-content: space-between; padding-top: 2rem; padding-bottom: 2rem; }
+footer { color: var(--rs-muted); font-size: .8rem; padding-bottom: 2rem; }
+</style>
+</head>
+<body class="{block:PermalinkPage}permalink{/block:PermalinkPage}">
+<header>
+  <a href="/" aria-label="{Title}">@@RS_MARK_SVG@@</a>
+  <div>
+    <h1><a href="/">{Title}</a></h1>
+    {block:Description}<p>{Description}</p>{/block:Description}
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+  {block:Posts}
+    <article class="post">
+      {block:Photo}
+        <a href="{Permalink}"><img src="{PhotoURL-HighRes}" alt="{PhotoAlt}" loading="lazy"></a>
+        {block:Caption}<div class="body">{Caption}</div>{/block:Caption}
+      {/block:Photo}
+      {block:Photoset}
+        {Photoset-700}
+        {block:Caption}<div class="body">{Caption}</div>{/block:Caption}
+      {/block:Photoset}
+      {block:Text}
+        <div class="body">
+          {block:Title}<h2><a href="{Permalink}">{Title}</a></h2>{/block:Title}
+          {Body}
+        </div>
+      {/block:Text}
+      {block:Quote}
+        <div class="body"><p>“{Quote}”</p>{block:Source}<p>— {Source}</p>{/block:Source}</div>
+      {/block:Quote}
+      {block:Link}
+        <div class="body">
+          <h2><a href="{URL}">{Name}</a></h2>
+          {block:Description}{Description}{/block:Description}
+        </div>
+      {/block:Link}
+      {block:Video}
+        <div class="body">{Video-500}</div>
+        {block:Caption}<div class="body">{Caption}</div>{/block:Caption}
+      {/block:Video}
+      <div class="meta">
+        {block:Date}<a href="{Permalink}">{DayOfMonth} {Month} {Year}</a>{/block:Date}
+        {block:HasTags}<div class="tags">{block:Tags}<a href="{TagURL}">#{Tag}</a>{/block:Tags}</div>{/block:HasTags}
+      </div>
+    </article>
+  {/block:Posts}
+  </div>
+</main>
+
+{block:Pagination}
+<nav class="pages">
+  <span>{block:PreviousPage}<a href="{PreviousPage}">← newer</a>{/block:PreviousPage}</span>
+  <span>{CurrentPage} / {TotalPages}</span>
+  <span>{block:NextPage}<a href="{NextPage}">older →</a>{/block:NextPage}</span>
+</nav>
+{/block:Pagination}
+{block:PermalinkPagination}
+<nav class="pages">
+  <span>{block:PreviousPost}<a href="{PreviousPost}">← newer</a>{/block:PreviousPost}</span>
+  <span>{block:NextPost}<a href="{NextPost}">older →</a>{/block:NextPost}</span>
+</nav>
+{/block:PermalinkPagination}
+
+<footer>
+  © RedScope Technologies · images all rights reserved
+</footer>
+</body>
+</html>

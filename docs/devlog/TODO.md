@@ -45,15 +45,19 @@ In `starters/<platform>/` here; each becomes a template repository once used
 for real (Q6). `task build` makes them ready to use in
 `dist/rs-tech-brandstyle/starters/`, with the pack's files put in.
 
-- [ ] Read the Docs: Sphinx with Furo, `.readthedocs.yaml` (Q7)
-- [ ] GitBook: the base customization, values and files to enter (Q8)
-- [ ] Tumblr theme for `redscope.tumblr.com`, a blog of images (Q9)
-- [ ] Blogger theme for `blog.redscope.online`, articles and news (Q9)
-- [ ] GitHub Pages: a Vue, a React and an Astro starter with the pack's
+- [x] Read the Docs: Sphinx with Furo, `.readthedocs.yaml` (Q7)
+- [x] GitBook: the base customization, values and files to enter (Q8)
+- [x] Tumblr theme for `redscope.tumblr.com`, a blog of images (Q9)
+- [x] Blogger theme for `blog.redscope.online`, articles and news (Q9)
+- [x] GitHub Pages: a Vue, a React and an Astro starter with the pack's
       tokens, logo, favicon, light/dark, deployed by a Pages workflow
-- [ ] `task check` builds every starter that can be built offline of its
+- [x] `task check` builds every starter that can be built off its
       platform (Sphinx, Vue, React, Astro); Tumblr and Blogger checked
       for well-formedness
+- [ ] Seen on each platform (needs the accounts, the author): a Read the
+      Docs project, the GitBook site, the Tumblr and Blogger themes
+      installed, a Pages repository from a starter; each starter's Status
+      line updated
 
 **Done when:** each starter builds in CI and was seen on its platform.
 

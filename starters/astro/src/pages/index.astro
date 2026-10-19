@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+
+const cards = [
+  { for: "Colours", name: "tokens.css", note: "--rs-* variables follow light and dark." },
+  { for: "Logo, icons", name: "brand/", note: "All rights reserved: our own pages only." },
+  { for: "Deploy", name: "GitHub Pages", note: "A push to master publishes the site." },
+];
+---
+<Base>
+  <h1>RedScope Technologies</h1>
+  <p class="muted">An Astro starter in the RedScope style. Replace this page with your own.</p>
+  <h2>What is here</h2>
+  <div class="grid">
+    {cards.map((card) => (
+      <div class="card">
+        <div class="for">{card.for}</div>
+        <div class="name">{card.name}</div>
+        <div class="note">{card.note}</div>
+      </div>
+    ))}
+  </div>
+</Base>

@@ -31,12 +31,17 @@ tasks:
 
   check:
     desc: Run every static check (same as CI)
-    deps: [check:pack, check:yaml, check:commits]
+    deps: [check:pack, check:starters, check:yaml, check:commits]
 
   check:pack:
     desc: Check tokens, contrast, SVGs, resources/ and two builds of the pack
     cmds:
       - uv run --frozen python -I tests/check.py
+
+  check:starters:
+    desc: Build the Sphinx, Vue, React and Astro starters from a fresh pack (needs npm)
+    cmds:
+      - uv run --frozen python -I tests/starters.py
 
   check:yaml:
     desc: Lint YAML files
