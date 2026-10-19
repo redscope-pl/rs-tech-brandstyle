@@ -9,7 +9,7 @@ they differ, this file wins for this repository.
 
 ## What this is
 
-One source of the brand (`src/tokens.json`, `src/logo/`) built into a pack
+One source of the brand (`src/tokens.json`, `resources/`) built into a pack
 of files that the zone's software takes as they are: CSS variables, logos and
 icons, themes for Authentik, Gitea, Vaultwarden and the zone's own pages. Its
 first consumer is `forge/redscope-pl/rs-tech-infra` (its TODO Phase 8), which
@@ -17,9 +17,15 @@ pins a release tarball by version and hash.
 
 Read first:
 
-1. [docs/devlog/TODO.md](docs/devlog/TODO.md): what is being worked on now
-2. [docs/devlog/BRAINSTORM.md](docs/devlog/BRAINSTORM.md): open questions `Q<n>`
-3. [docs/usage.md](docs/usage.md): how each app takes its part of the pack
+1. [docs/devlog/VISION.md](docs/devlog/VISION.md): the idea
+2. [docs/devlog/TODO.md](docs/devlog/TODO.md): what is being worked on now
+3. [docs/devlog/BRAINSTORM.md](docs/devlog/BRAINSTORM.md): open questions `Q<n>`
+4. [docs/changelog/](docs/changelog/): how it got here, the author's
+   answered orders and decisions
+5. [docs/usage.md](docs/usage.md): how each app takes its part of the pack
+
+The author's answers come in [docs/devlog/ORDERS.md](docs/devlog/ORDERS.md)
+(empty between batches).
 
 ## Tooling and checks
 
@@ -27,7 +33,8 @@ Read first:
 uv sync                  # tools from PyPI: task, commitizen, lefthook, yamllint, Pillow
 uv run task setup        # + lefthook git hooks
 uv run task build        # dist/rs-tech-brandstyle/ + reproducible tarball
-uv run task check        # tokens, contrast, SVGs, two builds compared, YAML, commits (= CI)
+uv run task resources    # redraw icons and light/dark logos in resources/ (commit them)
+uv run task check        # tokens, contrast, SVGs, resources fresh, two builds compared, YAML, commits (= CI)
 uv run task preview      # build, then open docs/preview.html
 ```
 
@@ -44,13 +51,20 @@ uv run task preview      # build, then open docs/preview.html
 ## Layout
 
 ```
-src/tokens.json        colours (brand, light, dark), fonts, radii, contrast pairs
-src/logo/              mark.svg, wordmark.svg (traced), the source PNGs
+src/tokens.json        palette, light and dark schemes (palette names), fonts, radii, contrast pairs
 src/css/zone.css       base style of the zone's own pages
+resources/             images and media, all rights reserved (NOTICE.md):
+  icons/               made by `task resources` (committed)
+  images/logo/         masters mark.svg, wordmark.svg, *.source.png; light/dark made
+  images/backgrounds/  backgrounds
+  media/               sound and video, when there is any
 src/apps/<app>/        per-app files, laid out as the app expects them
 scripts/build.py       src/ -> dist/ (tokens into every stylesheet, icons, manifest, tarball)
 tests/check.py         the pack's checks
-docs/                  usage, preview page; docs/devlog/ for plan and questions
+docs/                  usage, preview page
+docs/legal/            copyright and trademark notices (reusable, shipped in the pack)
+docs/devlog/           VISION, TODO, BRAINSTORM, ORDERS
+docs/changelog/        phase-<n>.md, append-only
 docs/.agents/          agent notes (see below)
 .github/workflows/     check (= task check), release (tags v*), CodeQL, issue summaries
 ```
@@ -58,7 +72,12 @@ docs/.agents/          agent notes (see below)
 ## Rules for agents
 
 1. **Follow the plan.** Work on the next unchecked item in TODO.md, or what
-   the user asks. Tick it off when done and verified. Work that belongs to
+   the user asks. Tick it off when done and verified. **The changelog is
+   append-only:** sections in `docs/changelog/` are never rewritten; each
+   new one starts with `UNIXUSAT=<ms since epoch> · commit <hash>`. An
+   answered batch of ORDERS.md and the answered `Q<n>` of BRAINSTORM.md
+   (with its **Decision:**) move word for word into
+   `docs/changelog/phase-<n>.md`, leaving ORDERS.md empty. Work that belongs to
    another repository is not done here: write it into
    `~/__WORKSHOP/forge/NOTES-for-repositories.md`.
 2. **Don't settle open questions in code.** If a change depends on a `Q<n>`,
@@ -68,7 +87,9 @@ docs/.agents/          agent notes (see below)
    below WCAG AA.
 4. **No outside resources** in the pack (fonts, images, CSS from other
    hosts): the zone's pages load nothing from third parties.
-5. **Don't edit `dist/`** or the source PNGs; build from `src/`.
+5. **Don't edit `dist/`**, the source PNGs, or the made images in
+   `resources/` by hand; change a master and run `task resources`.
+   Images and media are all rights reserved: never add third-party images.
 6. **Say what is untested.** A theme counts as working only after it was
    seen on the running app; keep the status lines in `docs/usage.md` true.
 7. **Ask first** before anything outward-facing: pushing, tagging a

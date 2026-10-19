@@ -24,12 +24,17 @@ tasks:
     cmds:
       - uv run --frozen python -I scripts/build.py
 
+  resources:
+    desc: Redraw the images made from the masters in resources/ (icons, light/dark logos)
+    cmds:
+      - uv run --frozen python -I scripts/build.py resources
+
   check:
     desc: Run every static check (same as CI)
     deps: [check:pack, check:yaml, check:commits]
 
   check:pack:
-    desc: Check tokens, contrast, SVGs and two builds of the pack
+    desc: Check tokens, contrast, SVGs, resources/ and two builds of the pack
     cmds:
       - uv run --frozen python -I tests/check.py
 

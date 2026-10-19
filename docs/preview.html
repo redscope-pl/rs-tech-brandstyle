@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RedScope style pack</title>
-<link rel="icon" href="../dist/rs-tech-brandstyle/logo/favicon.ico">
+<link rel="icon" href="../dist/rs-tech-brandstyle/icons/favicon.ico">
 <link rel="stylesheet" href="../dist/rs-tech-brandstyle/css/zone.css">
 <script>
   const t = new URLSearchParams(location.search).get("theme");
@@ -22,30 +22,39 @@
   }
   :root[data-theme="dark"] .logo-light { display: none; }
   :root[data-theme="dark"] .logo-dark { display: inline; }
+  .row { display: flex; gap: .3rem; margin: .3rem 0; align-items: center; }
+  .row span { flex: 1; height: 2.4rem; border-radius: var(--rs-radius-sm); border: 1px solid var(--rs-line);
+    font: .7rem var(--rs-font-mono); display: flex; align-items: end; padding: .2rem; }
+  .row b { width: 4.5rem; font-weight: 600; font-size: .85rem; }
   .icons img { height: 4rem; margin-right: 1rem; vertical-align: middle; }
 </style>
 </head>
 <body>
 <main>
-  <img class="logo-light" src="../dist/rs-tech-brandstyle/logo/logo-light.svg" alt="RedScope Technologies">
-  <img class="logo-dark" src="../dist/rs-tech-brandstyle/logo/logo-dark.svg" alt="RedScope Technologies">
+  <img class="logo-light" src="../dist/rs-tech-brandstyle/images/logo/logo-light.svg" alt="RedScope Technologies">
+  <img class="logo-dark" src="../dist/rs-tech-brandstyle/images/logo/logo-dark.svg" alt="RedScope Technologies">
   <h1>The RedScope style pack</h1>
   <p class="muted">Colours, logo and themes of every page the zone shows.</p>
 
-  <h2>Colours</h2>
+  <h2>Palette</h2>
+  <p class="muted">Dark night with gray, white, red and crimson, in shades.</p>
+  <div id="palette"></div>
+
+  <h2>Colours of the scheme</h2>
   <div class="grid">
     <div class="card"><div class="swatch" style="background:var(--rs-accent)"></div><div class="name">accent</div><code>--rs-accent</code></div>
     <div class="card"><div class="swatch" style="background:var(--rs-bg)"></div><div class="name">bg</div><code>--rs-bg</code></div>
     <div class="card"><div class="swatch" style="background:var(--rs-fg)"></div><div class="name">fg</div><code>--rs-fg</code></div>
     <div class="card"><div class="swatch" style="background:var(--rs-accent-soft)"></div><div class="name">accent-soft</div><code>--rs-accent-soft</code></div>
+    <div class="card"><div class="swatch" style="background:var(--rs-highlight)"></div><div class="name">highlight</div><code>--rs-highlight</code></div>
   </div>
 
   <h2>Icons</h2>
   <p class="icons">
-    <img src="../dist/rs-tech-brandstyle/logo/mark.svg" alt="mark (SVG)">
-    <img src="../dist/rs-tech-brandstyle/logo/mark-512.png" alt="mark (PNG)">
-    <img src="../dist/rs-tech-brandstyle/logo/icon-192.png" alt="app icon">
-    <img src="../dist/rs-tech-brandstyle/logo/favicon-32.png" alt="favicon" style="height:32px">
+    <img src="../dist/rs-tech-brandstyle/images/logo/mark.svg" alt="mark (SVG)">
+    <img src="../dist/rs-tech-brandstyle/icons/mark-512.png" alt="mark (PNG)">
+    <img src="../dist/rs-tech-brandstyle/icons/icon-192.png" alt="app icon">
+    <img src="../dist/rs-tech-brandstyle/icons/favicon-32.png" alt="favicon" style="height:32px">
   </p>
 
   <h2>Text</h2>
@@ -54,5 +63,26 @@
 
   <footer class="muted">rs-tech-brandstyle · <code>task build</code> makes <code>dist/</code></footer>
 </main>
+<script>
+  // The palette as tokens.css declares it: every --rs-<family>-<shade>.
+  const css = getComputedStyle(document.documentElement);
+  const families = { night: [950, 900, 800, 700, 600], gray: [50, 100, 200, 300, 400, 500, 600, 700, 800],
+    white: [100], red: [50, 300, 400, 500, 600, 700, 800, 900], crimson: [50, 300, 400, 500, 600, 700, 800, 900] };
+  for (const [family, shades] of Object.entries(families)) {
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `<b>${family}</b>`;
+    for (const shade of shades) {
+      const v = css.getPropertyValue(`--rs-${family}-${shade}`).trim();
+      const cell = document.createElement("span");
+      cell.style.background = v;
+      cell.style.color = shade >= 500 || family === "night" ? "#fff" : "#160100";
+      cell.textContent = shade;
+      cell.title = `--rs-${family}-${shade} ${v}`;
+      row.append(cell);
+    }
+    document.getElementById("palette").append(row);
+  }
+</script>
 </body>
 </html>

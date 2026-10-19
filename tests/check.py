@@ -1,4 +1,4 @@
-"""Static checks of the style pack: tokens, contrast, SVGs, the built pack.
+"""Static checks of the style pack: tokens, contrast, SVGs, resources, the built pack.
 
 Usage: python tests/check.py   (exit code 1 on any failure, every failure listed)
 """
@@ -38,21 +38,28 @@ def contrast(a: str, b: str) -> float:
 
 
 def check_tokens(tokens: dict) -> None:
-    for group in ("brand", "light", "dark"):
-        for k, v in tokens[group].items():
+    for family, shades in tokens["palette"].items():
+        for shade, v in shades.items():
             if not HEX.match(v):
-                fail(f"tokens.json {group}.{k}: {v!r} is not #rrggbb (lower case)")
+                fail(f"tokens.json palette.{family}.{shade}: {v!r} is not #rrggbb (lower case)")
     if tokens["light"].keys() != tokens["dark"].keys():
         fail("tokens.json: light and dark have different names")
     for scheme in ("light", "dark"):
+        for k, ref in tokens[scheme].items():
+            try:
+                build.color(ref)
+            except (KeyError, ValueError):
+                fail(f"tokens.json {scheme}.{k}: {ref!r} is not a palette shade")
+                return
+    for scheme in ("light", "dark"):
         for fg, bg in tokens["contrast"]["pairs"]:
-            ratio = contrast(tokens[scheme][fg], tokens[scheme][bg])
+            ratio = contrast(build.color(tokens[scheme][fg]), build.color(tokens[scheme][bg]))
             if ratio < 4.5:
                 fail(f"contrast {scheme} {fg} on {bg}: {ratio:.2f} < 4.5 (WCAG AA)")
 
 
 def check_svgs() -> None:
-    for svg in sorted((ROOT / "src").rglob("*.svg")):
+    for svg in sorted([*(ROOT / "src").rglob("*.svg"), *(ROOT / "resources").rglob("*.svg")]):
         try:
             root = ET.parse(svg).getroot()
         except ET.ParseError as e:
@@ -62,6 +69,13 @@ def check_svgs() -> None:
             fail(f"{svg.relative_to(ROOT)}: no viewBox")
         if re.search(r"(href|url)\(?\s*=?\s*[\"']?https?:", svg.read_text()):
             fail(f"{svg.relative_to(ROOT)}: loads an outside resource")
+
+
+def check_resources(out: Path) -> None:
+    for made in build.render_resources(out):
+        committed = build.RESOURCES / made.relative_to(out)
+        if not committed.exists() or committed.read_bytes() != made.read_bytes():
+            fail(f"resources/{made.relative_to(out)} is stale: run `task resources` and commit")
 
 
 def check_pack(out: Path, tokens: dict) -> None:
@@ -105,6 +119,7 @@ def main() -> int:
     check_tokens(tokens)
     check_svgs()
     with tempfile.TemporaryDirectory() as tmp:
+        check_resources(Path(tmp) / "resources")
         check_pack(Path(tmp), tokens)
     for f in failures:
         print(f"FAIL {f}")

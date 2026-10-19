@@ -3,38 +3,6 @@
 Open questions. Each has a *Lean:* (what an agent would do if told to pick)
 and gets a **Decision:** from the author. Agents don't settle them in code.
 
-## Q1: the licence
-
-`LICENSE` is the Mozilla Public License 2.0; the old README named CC
-BY-NC-SA 4.0; the old `pyproject.toml` said CC BY-SA 4.0. The pack holds
-both code (build script, CSS) and the logo. rs-tech-infra asks whether the
-licence fits pages of other software (Gitea, Authentik: MIT and others).
-
-- a) MPL-2.0 for all of it
-- b) MPL-2.0 for code and CSS, the logo all rights reserved (as a mark)
-- c) CC BY-NC-SA 4.0 for all of it (non-commercial: awkward for an
-  office's own commercial pages)
-
-*Lean:* b): the CSS themes link into other software freely; the logo is
-not something others should reuse.
-
-## Q2: colours
-
-Sampled from the logo: red `#b11020` on night `#160100`. Light scheme:
-warm white `#fbf8f6`, links and buttons in the logo red. Dark scheme: the
-logo's night as background, a lighter red `#f2444f` for links (the logo red
-on night is too dark for text, 2.5:1).
-
-*Lean:* keep them until the author corrects.
-
-## Q3: the logo as vectors
-
-The eye and the words in `src/logo/` are traced from the PNGs of the site
-(1000 px logo, 809 px words). The eye is close; the words are smoothed from
-a small, noisy PNG. Is there an original vector file (the designer's)?
-
-*Lean:* use the traced ones until an original turns up; replace then.
-
 ## Q4: a brand font
 
 The words of the logo are lettering (a cut R, T, E), not a font the pages
@@ -51,3 +19,52 @@ The old `package.json` named the pack for npm. Publishing to npm is outward
 and permanent.
 
 *Lean:* not now; the tarball release is enough for the zone.
+
+## Q6: where the starting packets live
+
+The vision asks for starting packets: GitBook, Read the Docs, GitHub Pages
+(Vue, React, Astro), Tumblr, Blogger.
+
+- a) here, `starters/<platform>/`, each minimal, built and checked with the pack
+- b) one template repository per starter in the scope (GitHub "template
+  repository"), each pulling a pinned pack release
+- c) a) first, b) once a starter is used for real
+
+*Lean:* c): one place to keep them in step while the pack changes fast.
+
+## Q7: Read the Docs: which documentation tool
+
+Read the Docs builds Sphinx and MkDocs (and others). Each needs its own theme.
+
+- a) MkDocs with Material (an `extra.css` and the logo)
+- b) Sphinx with Furo (CSS variables, light and dark)
+- c) both
+
+*Lean:* a): Markdown like the rest of our docs; Material has light/dark and
+takes CSS variables.
+
+## Q8: GitBook
+
+Hosted GitBook takes the brand through its settings (primary colour, logo,
+favicon, fonts from a list), not through CSS. The packet would be the values
+and files to enter, and a guide.
+
+*Lean:* that, unless there is a self-hosted GitBook (legacy CLI) in use.
+
+## Q9: Tumblr and Blogger blogs
+
+Which blogs will wear the themes (their addresses), and what they publish
+(text, pictures, both)? A theme is tried only by installing it on a blog,
+which needs the account owner.
+
+*Lean:* full minimal themes (Tumblr HTML with its blocks, Blogger XML), light
+and dark from the visitor's scheme; the author installs them on a test blog
+first.
+
+## Q10: the copyright holder
+
+The notices say "© Sett Sarverott A.A.B. (RedScope Technologies)". Is
+RedScope Technologies a registered business that should hold the rights
+itself (its full legal name, registry number)?
+
+*Lean:* keep the wording until the author names the entity.

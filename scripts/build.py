@@ -1,12 +1,16 @@
-"""Build the style pack: src/ -> dist/rs-tech-brandstyle/ and its release tarball.
+"""Build the style pack: src/ + resources/ -> dist/rs-tech-brandstyle/ and its tarball.
 
-Usage: python scripts/build.py [--out DIR]
+Usage: python scripts/build.py [--out DIR]   the pack
+       python scripts/build.py resources     redraw the made images in resources/
 
-- src/tokens.json becomes css/tokens.css: --rs-light-*, --rs-dark-* always, and
-  --rs-* following the visitor's scheme (or data-theme="light|dark" on <html>).
+- src/tokens.json becomes css/tokens.css: the palette (--rs-<family>-<shade>),
+  --rs-light-*, --rs-dark-* always, and --rs-* following the visitor's scheme
+  (or data-theme="light|dark" on <html>).
 - Every app stylesheet under src/apps/ gets tokens.css put in front of it, so
   each output file stands alone (the apps can't load a shared file).
-- Icons are cut from the source PNG of the logo (Pillow), not from the SVG.
+- resources/ holds the images (all rights reserved). Icons and the light/dark
+  logos are made from the masters there and committed; tests/check.py fails
+  when they are stale. Icons are cut from the source PNG (Pillow), not the SVG.
 - MANIFEST.sha256 lists every file; the tarball is reproducible (fixed mtime,
   owner and order), so a pinned release can be checked by its hash.
 """
@@ -27,6 +31,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
+RESOURCES = ROOT / "resources"
+LOGO = RESOURCES / "images/logo"
 NAME = "rs-tech-brandstyle"
 # Square cut of the source logo around the eye (x, y, x + size, y + size).
 MARK_BOX = (200, 100, 800, 700)
@@ -42,14 +48,23 @@ def rgb(hex_color: str) -> str:
     return " ".join(str(int(hex_color[i : i + 2], 16)) for i in (1, 3, 5))
 
 
+def color(ref: str) -> str:
+    """A palette name ("night-900") as its #rrggbb."""
+    family, shade = ref.rsplit("-", 1)
+    return TOKENS["palette"][family][shade]
+
+
 def tokens_css(tokens: dict) -> str:
     def block(selector: str, decls: list[str]) -> str:
         return selector + " {\n" + "".join(f"  {d}\n" for d in decls) + "}\n"
 
-    fixed = [f"--rs-brand-{k}: {v};" for k, v in tokens["brand"].items()]
+    fixed = []
+    for family, shades in tokens["palette"].items():
+        for shade, v in shades.items():
+            fixed += [f"--rs-{family}-{shade}: {v};", f"--rs-{family}-{shade}-rgb: {rgb(v)};"]
     for scheme in ("light", "dark"):
-        for k, v in tokens[scheme].items():
-            fixed += [f"--rs-{scheme}-{k}: {v};", f"--rs-{scheme}-{k}-rgb: {rgb(v)};"]
+        for k, ref in tokens[scheme].items():
+            fixed += [f"--rs-{scheme}-{k}{s}: var(--rs-{ref}{s});" for s in ("", "-rgb")]
     fixed += [f"--rs-font-{k}: {v};" for k, v in tokens["font"].items()]
     fixed += [f"--rs-radius-{k}: {v};" for k, v in tokens["radius"].items()]
 
@@ -98,19 +113,21 @@ def lockup(mark: str, words: str) -> str:
 
 
 def icons(out: Path) -> None:
-    src = Image.open(SRC / "logo/redscope-tech-logo.source.png").convert("RGB")
+    src = Image.open(LOGO / "redscope-tech-logo.source.png").convert("RGB")
     # The eye alone: alpha from how red a pixel is, the words below it left out.
     r, g, _ = src.split()
     alpha = Image.merge("RGB", (r, g, g)).convert("L", (1, -1, 0, 0))
     alpha = Image.eval(alpha, lambda v: max(0, min(255, (v - 40) * 3)))
     alpha.paste(0, (0, MARK_BOTTOM, src.width, src.height))
-    color = lambda name: tuple(int(c) for c in rgb(TOKENS["brand"][name]).split())
-    mark = Image.new("RGBA", src.size, color("red") + (0,))
+    def channels(ref: str) -> tuple[int, ...]:
+        return tuple(int(c) for c in rgb(color(ref)).split())
+
+    mark = Image.new("RGBA", src.size, channels("red-600") + (0,))
     mark.putalpha(alpha)
     mark = mark.crop(MARK_BOX)
     mark.resize((512, 512), Image.LANCZOS).save(out / "mark-512.png", optimize=True)
     # App icons and favicons: the eye on the night of the logo.
-    icon = Image.new("RGBA", mark.size, color("night") + (255,))
+    icon = Image.new("RGBA", mark.size, channels("night-900") + (255,))
     icon.alpha_composite(mark)
     icon = icon.convert("RGB")
     for size in (180, 192, 512):
@@ -119,29 +136,39 @@ def icons(out: Path) -> None:
     icon.save(out / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48)])
 
 
+def render_resources(dest: Path) -> list[Path]:
+    """The images made from the masters: dest/icons/, dest/images/logo/*-{light,dark}.svg."""
+    (dest / "icons").mkdir(parents=True, exist_ok=True)
+    (dest / "images/logo").mkdir(parents=True, exist_ok=True)
+    icons(dest / "icons")
+    mark = (LOGO / "mark.svg").read_text()
+    words = (LOGO / "wordmark.svg").read_text()
+    on_light, on_dark = color(TOKENS["light"]["fg"]), color(TOKENS["dark"]["fg"])
+    logos = {
+        "wordmark-light.svg": recolor(words, on_light),
+        "wordmark-dark.svg": recolor(words, on_dark),
+        "logo-light.svg": lockup(mark, recolor(words, on_light)),
+        "logo-dark.svg": lockup(mark, recolor(words, on_dark)),
+    }
+    for name, svg in logos.items():
+        (dest / "images/logo" / name).write_text(svg)
+    return sorted([*(dest / "icons").iterdir(), *(dest / "images/logo" / n for n in logos)])
+
+
 def build(out: Path) -> Path:
     pack = out / NAME
     shutil.rmtree(pack, ignore_errors=True)
-    for d in ("css", "logo"):
-        (pack / d).mkdir(parents=True)
+    (pack / "css").mkdir(parents=True)
 
     tokens = tokens_css(TOKENS)
     (pack / "css/tokens.css").write_text(tokens)
     (pack / "css/zone.css").write_text(with_tokens((SRC / "css/zone.css").read_text(), tokens))
 
-    mark = (SRC / "logo/mark.svg").read_text()
-    words = (SRC / "logo/wordmark.svg").read_text()
-    night, white = TOKENS["brand"]["night"], TOKENS["dark"]["fg"]
-    logos = {
-        "mark.svg": mark,
-        "wordmark-light.svg": recolor(words, night),
-        "wordmark-dark.svg": recolor(words, white),
-        "logo-light.svg": lockup(mark, recolor(words, night)),
-        "logo-dark.svg": lockup(mark, recolor(words, white)),
-    }
-    for name, svg in logos.items():
-        (pack / "logo" / name).write_text(svg)
-    icons(pack / "logo")
+    # resources/ as it is (icons/, images/), with its notice; the legal notices
+    # and the code's licence go along, so every copy carries them.
+    shutil.copytree(RESOURCES, pack, dirs_exist_ok=True)
+    shutil.copytree(ROOT / "docs/legal", pack / "legal")
+    shutil.copyfile(ROOT / "LICENSE", pack / "LICENSE")
 
     # Per-app files keep their path under src/apps/; stylesheets get the tokens.
     for f in sorted((SRC / "apps").rglob("*")):
@@ -152,17 +179,18 @@ def build(out: Path) -> Path:
                 target.write_text(with_tokens(f.read_text(), tokens))
             else:
                 shutil.copyfile(f, target)
-    # Logos each app expects under its own names (see docs/usage.md).
+    # Images each app expects under its own names (see docs/usage.md).
     gitea_img = pack / "gitea/public/assets/img"
     gitea_img.mkdir(parents=True, exist_ok=True)
-    for src_name, name in {
-        "mark.svg": "logo.svg",
-        "icon-512.png": "logo.png",
-        "favicon-32.png": "favicon.png",
-        "icon-180.png": "apple-touch-icon.png",
-    }.items():
-        shutil.copyfile(pack / "logo" / src_name, gitea_img / name)
-    shutil.copyfile(pack / "logo/mark.svg", gitea_img / "favicon.svg")
+    for src_name, name in [
+        ("images/logo/mark.svg", "logo.svg"),
+        ("icons/icon-512.png", "logo.png"),
+        ("images/logo/mark.svg", "favicon.svg"),
+        ("icons/favicon-32.png", "favicon.png"),
+        ("icons/icon-180.png", "apple-touch-icon.png"),
+    ]:
+        shutil.copyfile(pack / src_name, gitea_img / name)
+    shutil.copyfile(pack / "images/backgrounds/flow-background.svg", pack / "authentik/flow-background.svg")
 
     files = sorted(p for p in pack.rglob("*") if p.is_file())
     manifest = "".join(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(pack)}\n" for p in files)
@@ -190,7 +218,12 @@ TOKENS = json.loads((SRC / "tokens.json").read_text())
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("what", nargs="?", choices=["pack", "resources"], default="pack")
     parser.add_argument("--out", type=Path, default=ROOT / "dist")
     args = parser.parse_args()
-    path = build(args.out.resolve())
-    print(f"{path}  sha256 {hashlib.sha256(path.read_bytes()).hexdigest()}")
+    if args.what == "resources":
+        for p in render_resources(RESOURCES):
+            print(p.relative_to(ROOT))
+    else:
+        path = build(args.out.resolve())
+        print(f"{path}  sha256 {hashlib.sha256(path.read_bytes()).hexdigest()}")

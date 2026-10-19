@@ -11,12 +11,12 @@ whether it has been tried on a running app.
 
 Status: built for it, not yet linked from rs-tech-infra.
 
-Serve `css/zone.css` and `logo/` next to the pages, and link them:
+Serve `css/zone.css`, `icons/` and `images/` next to the pages, and link them:
 
 ```html
 <link rel="stylesheet" href="/brand/css/zone.css">
-<link rel="icon" href="/brand/logo/favicon.ico">
-<link rel="apple-touch-icon" href="/brand/logo/icon-180.png">
+<link rel="icon" href="/brand/icons/favicon.ico">
+<link rel="apple-touch-icon" href="/brand/icons/icon-180.png">
 ```
 
 `zone.css` has the classes of rs-tech-infra's Matrix welcome page
@@ -29,7 +29,13 @@ Any other web project can use `css/tokens.css` alone: the variables
 `--rs-bg`, `--rs-surface`, `--rs-fg`, `--rs-muted`, `--rs-line`,
 `--rs-accent`, `--rs-accent-hover`, `--rs-accent-fg`, `--rs-accent-soft`
 follow the scheme; `--rs-light-*` and `--rs-dark-*` are fixed; each has an
-`-rgb` twin (`177 16 32`) for `rgb(var(--rs-accent-rgb) / .3)`.
+`-rgb` twin (`177 16 32`) for `rgb(var(--rs-accent-rgb) / .3)`. The
+palette itself is `--rs-<family>-<shade>`: `night-950`…`600`, `gray-50`…`800`,
+`white-100`, `red-50`…`900`, `crimson-50`…`900`; `--rs-highlight` is the
+crimson accent.
+
+Images and media of the pack are all rights reserved (`NOTICE.md`): fine for
+our own pages, not for others to reuse.
 
 ## Authentik
 
@@ -37,7 +43,7 @@ Status: not yet tried (rs-tech-infra TODO Phase 8).
 
 - `authentik/custom.css`: the brand's custom CSS (`branding_custom_css`
   in a brand blueprint, its content as the value).
-- `logo/logo-dark.svg` as `branding_logo`, `logo/favicon.ico` as
+- `images/logo/logo-dark.svg` as `branding_logo`, `icons/favicon.ico` as
   `branding_favicon`, `authentik/flow-background.svg` as
   `branding_default_flow_background`: served by Authentik from a mounted
   folder (e.g. `/web/dist/assets/rs-tech/`).
