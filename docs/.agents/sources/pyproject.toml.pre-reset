@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "rs-tech-brandstyle"
+version = "0.1.0"
+description = "RedScope Technologies brand style bundle"
+authors = ["Sett Sarverott <sarverott@gmail.com>"]
+license = "CC BY-SA 4.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

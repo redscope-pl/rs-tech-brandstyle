@@ -1,0 +1,32 @@
+# A tag v<version> builds the pack and attaches the tarball and its checksum
+# to a GitHub release. rs-tech-infra pins that tarball by its sha256.
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Build
+        run: |
+          uv sync --frozen
+          uv run --frozen python -I scripts/build.py
+          cd dist && sha256sum rs-tech-brandstyle-*.tar.gz > SHA256SUMS
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: >-
+          gh release create "$TAG" --title "$TAG" --notes "Style pack $TAG"
+          dist/rs-tech-brandstyle-*.tar.gz dist/SHA256SUMS

@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- A look at the built pack (task preview): needs dist/ from `task build`.
+     ?theme=light or ?theme=dark forces a scheme. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RedScope style pack</title>
+<link rel="icon" href="../dist/rs-tech-brandstyle/logo/favicon.ico">
+<link rel="stylesheet" href="../dist/rs-tech-brandstyle/css/zone.css">
+<script>
+  const t = new URLSearchParams(location.search).get("theme");
+  if (t) document.documentElement.dataset.theme = t;
+</script>
+<style>
+  .swatch { height: 3rem; border-radius: var(--rs-radius-sm); border: 1px solid var(--rs-line); }
+  .logo-light, .logo-dark { height: 9rem; }
+  .logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .logo-light { display: none; }
+    :root:not([data-theme="light"]) .logo-dark { display: inline; }
+  }
+  :root[data-theme="dark"] .logo-light { display: none; }
+  :root[data-theme="dark"] .logo-dark { display: inline; }
+  .icons img { height: 4rem; margin-right: 1rem; vertical-align: middle; }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo-light" src="../dist/rs-tech-brandstyle/logo/logo-light.svg" alt="RedScope Technologies">
+  <img class="logo-dark" src="../dist/rs-tech-brandstyle/logo/logo-dark.svg" alt="RedScope Technologies">
+  <h1>The RedScope style pack</h1>
+  <p class="muted">Colours, logo and themes of every page the zone shows.</p>
+
+  <h2>Colours</h2>
+  <div class="grid">
+    <div class="card"><div class="swatch" style="background:var(--rs-accent)"></div><div class="name">accent</div><code>--rs-accent</code></div>
+    <div class="card"><div class="swatch" style="background:var(--rs-bg)"></div><div class="name">bg</div><code>--rs-bg</code></div>
+    <div class="card"><div class="swatch" style="background:var(--rs-fg)"></div><div class="name">fg</div><code>--rs-fg</code></div>
+    <div class="card"><div class="swatch" style="background:var(--rs-accent-soft)"></div><div class="name">accent-soft</div><code>--rs-accent-soft</code></div>
+  </div>
+
+  <h2>Icons</h2>
+  <p class="icons">
+    <img src="../dist/rs-tech-brandstyle/logo/mark.svg" alt="mark (SVG)">
+    <img src="../dist/rs-tech-brandstyle/logo/mark-512.png" alt="mark (PNG)">
+    <img src="../dist/rs-tech-brandstyle/logo/icon-192.png" alt="app icon">
+    <img src="../dist/rs-tech-brandstyle/logo/favicon-32.png" alt="favicon" style="height:32px">
+  </p>
+
+  <h2>Text</h2>
+  <p>Body text with <a href="#">a link</a> and <code>some code</code>.</p>
+  <p><a class="button" href="#">Sign in</a></p>
+
+  <footer class="muted">rs-tech-brandstyle · <code>task build</code> makes <code>dist/</code></footer>
+</main>
+</body>
+</html>

@@ -1,12 +1,50 @@
-# https://taskfile.dev
+# https://taskfile.dev — entry point of the RedScope Technologies style pack.
+# Run through uv (`uv run task <name>`) or any go-task v3 on PATH.
 
 version: '3'
 
 vars:
-  GREETING: Hello, World!
+  # Commits up to this one were made before commitizen was set up.
+  COMMITS_FROM: 7ce277f
 
 tasks:
   default:
     cmds:
-      - echo "{{.GREETING}}"
+      - task --list
     silent: true
+
+  setup:
+    desc: Install the tools (uv sync) and git hooks (lefthook)
+    cmds:
+      - uv sync --frozen
+      - uv run --frozen lefthook install
+
+  build:
+    desc: Build the pack into dist/ (folder + reproducible tarball)
+    cmds:
+      - uv run --frozen python -I scripts/build.py
+
+  check:
+    desc: Run every static check (same as CI)
+    deps: [check:pack, check:yaml, check:commits]
+
+  check:pack:
+    desc: Check tokens, contrast, SVGs and two builds of the pack
+    cmds:
+      - uv run --frozen python -I tests/check.py
+
+  check:yaml:
+    desc: Lint YAML files
+    cmds:
+      - uv run --frozen yamllint --strict .
+
+  check:commits:
+    desc: Check that commit messages follow commitizen
+    cmds:
+      - uv run --frozen cz check --rev-range {{.COMMITS_FROM}}..HEAD
+
+  preview:
+    desc: Build, then open the preview page of the pack (docs/preview.html)
+    deps: [build]
+    cmds:
+      - xdg-open docs/preview.html

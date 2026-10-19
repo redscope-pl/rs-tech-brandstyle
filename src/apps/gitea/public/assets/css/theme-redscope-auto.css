@@ -1,0 +1,8 @@
+/* Gitea: the RedScope theme following the visitor's light or dark scheme,
+   the way Gitea's own gitea-auto does. */
+@import "./theme-redscope-light.css" (prefers-color-scheme: light);
+@import "./theme-redscope-dark.css" (prefers-color-scheme: dark);
+
+gitea-theme-meta-info {
+  --theme-display-name: "RedScope (auto)";
+}
