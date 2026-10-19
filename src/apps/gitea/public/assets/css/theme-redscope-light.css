@@ -40,6 +40,6 @@ gitea-theme-meta-info {
   --color-text: var(--rs-light-fg);
   --color-text-light-2: var(--rs-light-muted);
   --color-secondary: var(--rs-light-line);
-  --fonts-proportional: var(--rs-font-sans);
+  --fonts-proportional: var(--rs-font-text);
   --fonts-monospace: var(--rs-font-mono);
 }

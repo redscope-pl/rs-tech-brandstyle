@@ -34,14 +34,20 @@ uv sync                  # tools from PyPI: task, commitizen, lefthook, yamllint
 uv run task setup        # + lefthook git hooks
 uv run task build        # dist/rs-tech-brandstyle/ + reproducible tarball
 uv run task resources    # redraw icons and light/dark logos in resources/ (commit them)
-uv run task check        # tokens, contrast, SVGs, resources fresh, two builds compared, YAML, commits (= CI)
-uv run task preview      # build, then open docs/preview.html
+uv run task check        # tokens, contrast, SVGs, resources fresh, two builds compared, starters, YAML, commits (= CI)
+uv run task check:starters   # build Sphinx, Vue, React, Astro starters from a fresh pack (npm)
+uv run task check:js     # node --test of src/js/
+uv run task preview      # build, then serve docs/preview*.html on http://localhost:8765
 ```
 
 - **Gate every commit** on `uv run task check` (exit code, output to
   `/dev/null`).
-- **Look at what you change.** `docs/preview.html?theme=light|dark` shows
-  the built pack; headless Chromium can screenshot it.
+- **Look at what you change.** `docs/preview.html` and
+  `docs/preview-nexus.html` (`?theme=light|dark`) show the built pack;
+  headless Chromium can screenshot them (the nexus page needs http).
+- **Accessible by default:** every new component keeps WCAG AA contrast,
+  works by keyboard (visible focus), keeps motion off under
+  `prefers-reduced-motion`, and gives screen readers the real text.
 - **Commits:** conventional commits, checked by commitizen in the lefthook
   `commit-msg` hook and in `task check`. Commits up to `7ce277f` predate it.
 - **`.gitignore` is the generic template** with broad rules (`dist`, `lib/`,
@@ -53,6 +59,8 @@ uv run task preview      # build, then open docs/preview.html
 ```
 src/tokens.json        palette, light and dark schemes (palette names), fonts, radii, contrast pairs
 src/css/zone.css       base style of the zone's own pages
+src/css/nexus.css      the nexus: terminal look of the author's drafts, opt-in rs-* classes
+src/js/                rs-data.js (public JSON into accessible lists), rs-scramble.js; plain scripts
 resources/             images and media, all rights reserved (NOTICE.md):
   icons/               made by `task resources` (committed)
   images/logo/         masters mark.svg, wordmark.svg, *.source.png; light/dark made
@@ -60,7 +68,10 @@ resources/             images and media, all rights reserved (NOTICE.md):
   media/               sound and video, when there is any
 src/apps/<app>/        per-app files, laid out as the app expects them
 scripts/build.py       src/ -> dist/ (tokens into every stylesheet, icons, manifest, tarball)
+starters/<platform>/   starting packets (sphinx, gitbook, tumblr, blogger, vue, react, astro);
+                       placeholders @@RS_…@@ and brand/ are put in by the build
 tests/check.py         the pack's checks
+tests/starters.py      builds the starters that can be built offline
 docs/                  usage, preview page
 docs/legal/            copyright and trademark notices (reusable, shipped in the pack)
 docs/devlog/           VISION, TODO, BRAINSTORM, ORDERS

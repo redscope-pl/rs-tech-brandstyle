@@ -16,17 +16,20 @@ hand.
 | ---------------------------- | -------------------------------------------------------------- |
 | `css/tokens.css`             | The palette (night, gray, white, red, crimson in shades), fonts, radii as CSS variables (`--rs-*`), light + dark |
 | `css/zone.css`               | Base style of the zone's own HTML pages (tokens included)       |
+| `css/nexus.css`, `js/`       | The nexus (terminal look: frame, status lines, fragments) and the data reader `rs-data.js`, `rs-scramble.js` |
 | `images/logo/`               | The eye (`mark.svg`), the words, both together (light, dark)    |
 | `icons/`                     | App icons, favicons (PNG, ICO), the eye as a transparent PNG    |
 | `images/backgrounds/`        | Backgrounds (Authentik's flows)                                 |
 | `authentik/`                 | The brand's custom CSS and a flow background                   |
 | `gitea/public/`              | Themes `redscope-auto/light/dark` and logos, for Gitea's `custom/` |
 | `vaultwarden/templates/`     | The web vault's own CSS                                        |
+| `starters/`                  | Starting packets: Sphinx (Read the Docs), GitBook, Tumblr, Blogger, Vue, React, Astro (GitHub Pages); [starters/README.md](starters/README.md) |
 | `LICENSE`, `NOTICE.md`, `legal/` | MPL-2.0 for the code; images all rights reserved; copyright and trademark notices |
 
 How each app takes its part: [docs/usage.md](docs/usage.md).
-`task preview` opens [docs/preview.html](docs/preview.html), a page showing
-the built pack.
+`task preview` serves [docs/preview.html](docs/preview.html) (the pack) and
+[docs/preview-nexus.html](docs/preview-nexus.html) (the nexus with sample
+data) on <http://localhost:8765>.
 
 ## Working on it
 
@@ -34,7 +37,7 @@ the built pack.
 uv sync              # tools from PyPI: task, commitizen, lefthook, yamllint, Pillow
 uv run task setup    # + git hooks
 uv run task build    # dist/
-uv run task check    # tokens, WCAG contrast, SVGs, two builds compared, YAML, commits (= CI)
+uv run task check    # tokens, contrast, resources, two builds, starters built (needs npm), YAML, commits (= CI)
 ```
 
 Change colours in `src/tokens.json` only. App themes in `src/apps/` use the
@@ -58,5 +61,6 @@ tarball by version and hash.
   [docs/legal/TRADEMARK.md](docs/legal/TRADEMARK.md); a code licence gives
   no right to them.
 
-© 2025–2026 [Sett Sarverott A.A.B.](https://orcid.org/0009-0006-4604-6540)
-(RedScope Technologies), [docs/legal/COPYRIGHT.md](docs/legal/COPYRIGHT.md).
+© 2025–2026 RedScope Technologies, author
+[Sett Sarverott A.A.B.](https://orcid.org/0009-0006-4604-6540)
+([docs/legal/COPYRIGHT.md](docs/legal/COPYRIGHT.md)).

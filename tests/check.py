@@ -108,10 +108,31 @@ def check_pack(out: Path, tokens: dict) -> None:
     if on_disk != set(listed):
         fail(f"MANIFEST.sha256: lists {sorted(set(listed) ^ on_disk)} wrongly")
 
+    check_starters(pack)
+
     with tarfile.open(first) as tar:
         names = tar.getnames()
     if any(not n.startswith(build.NAME) for n in names):
         fail("tarball: entries outside rs-tech-brandstyle/")
+
+
+def check_starters(pack: Path) -> None:
+    for name in build.STARTERS:
+        target = pack / "starters" / name
+        for f in sorted(target.rglob("*")):
+            if f.is_file() and f.suffix in build.TEXT and "@@RS_" in f.read_text():
+                fail(f"starters/{name}/{f.relative_to(target)}: placeholder left")
+        if build.STARTERS[name] and not (target / build.STARTERS[name] / "css/tokens.css").exists():
+            fail(f"starters/{name}: no brand files in {build.STARTERS[name]}/")
+    try:
+        ET.parse(pack / "starters/blogger/theme.xml")
+    except ET.ParseError as e:
+        fail(f"starters/blogger/theme.xml: {e}")
+    tumblr = (pack / "starters/tumblr/theme.html").read_text()
+    for block in ("Posts", "Photo", "Text", "Pagination", "PermalinkPage"):
+        opened, closed = tumblr.count("{block:%s}" % block), tumblr.count("{/block:%s}" % block)
+        if not opened or opened != closed:
+            fail(f"starters/tumblr/theme.html: {{block:{block}}} opened {opened}, closed {closed}")
 
 
 def main() -> int:

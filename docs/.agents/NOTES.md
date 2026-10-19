@@ -3,6 +3,37 @@
 Running notes of agents: findings, decisions taken with the user. Newest on
 top, dated. The author reads this read-only.
 
+## 2026-10-19 (Phase 4) · UNIXUSAT=1792445020350
+
+- The author calls the agent Cleo here too.
+- Committing the author's Blogger drafts (to keep them before removal) was
+  refused by the permission system ("sensitive-source provenance": an AI
+  Studio app). They stay untracked in `starters/blogger/`; never `git add -A`
+  while they are there, add paths explicitly. Q14 asks the author.
+- Blogger template data names (`data:post.snippets.long`,
+  `data:post.featuredImage`, `resizeImage`, `data:post.date.iso8601`,
+  `data:newerPageUrl`) are from memory of layouts v3 / widgets v2; the
+  mock in `docs/preview-nexus.html` shows only the CSS, not Blogger's output.
+- `node --test tests/js/` (a directory) fails on Node 24; use the glob
+  `'tests/js/*.test.cjs'`.
+- Headless Chromium with `--virtual-time-budget=4000` lets fetch finish
+  before the screenshot; `--dump-dom` shows what `rs-data.js` wrote.
+
+## 2026-10-19 (Phase 3) · UNIXUSAT=1792442859740
+
+- Starters made in `starters/`; the build copies them into the pack and puts
+  the brand in (placeholders, `brand/` folders). Sources never hold
+  `brand/` (STARTER_SKIP), so images stay only in `resources/`.
+- Versions picked by npm on 2026-10-19: Vite 8.3, Vue 3.5, React 19.3,
+  Astro 7.4; Sphinx 9.1 + Furo 2025.12.19 (uv). Node 24 locally and in CI.
+- Vite warns `./brand/css/zone.css doesn't exist at build time`: expected,
+  public files referenced through `%BASE_URL%`; the built page works.
+- Tumblr and Blogger theme syntax is from memory of their docs; only
+  installing them proves it. Blogger: widgets without includables rely on
+  Blogger filling in defaults on save (believed, not seen).
+- Q4's "logo will change": the only drawing-specific parts are the masters
+  and MARK_BOX/MARK_BOTTOM in `scripts/build.py`.
+
 ## 2026-10-19 (later) · UNIXUSAT=1792440094683
 
 - First batch of ORDERS answered Q1–Q3 and gave a vision draft; archived

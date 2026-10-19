@@ -1,0 +1,140 @@
+/* The nexus: the terminal look of RedScope, from the author's Blogger drafts
+   ("Technomantic Nexus"), made of tokens and made accessible. Opt-in classes
+   (rs-*), usable with zone.css or alone. Motion stops for visitors who ask for
+   less of it; text keeps WCAG AA contrast; nothing is loaded from outside. */
+
+/* A skip link for keyboard users: the first thing on the page. */
+.rs-skip {
+  position: absolute; left: -999rem; top: .5rem; z-index: 200;
+  background: var(--rs-accent); color: var(--rs-accent-fg); padding: .5rem 1rem;
+}
+.rs-skip:focus { left: .5rem; }
+
+/* The frame: a red border around the whole page, the status lines at its
+   top and bottom. */
+.rs-frame {
+  min-height: 100vh; display: flex; flex-direction: column;
+  border: 4px solid var(--rs-accent);
+}
+.rs-status {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem;
+  background: var(--rs-accent); color: var(--rs-accent-fg);
+  font: 700 .75rem/1.6 var(--rs-font-mono); letter-spacing: .15em; text-transform: uppercase;
+  padding: .2rem 1rem;
+}
+.rs-status--quiet {
+  background: var(--rs-bg); color: var(--rs-accent);
+  border-top: 1px solid var(--rs-accent); font-style: italic;
+}
+
+/* The workspace: navigation | content | sidebar; one column on narrow screens. */
+.rs-nexus { flex: 1; display: grid; grid-template-columns: auto minmax(0, 1fr) 18rem; }
+.rs-nexus > main { padding: 2.5rem; min-width: 0; }
+@media (max-width: 64rem) {
+  .rs-nexus { grid-template-columns: minmax(0, 1fr); }
+  .rs-nexus > main { padding: 1.5rem 1rem; }
+}
+
+.rs-nav {
+  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+  padding: 2.5rem .75rem; background: var(--rs-surface);
+  border-right: 1px solid rgb(var(--rs-accent-rgb) / .25);
+}
+@media (max-width: 64rem) {
+  .rs-nav { flex-direction: row; justify-content: center; padding: .75rem; border-right: 0;
+    border-bottom: 1px solid rgb(var(--rs-accent-rgb) / .25); }
+}
+.rs-nav-hex {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.75rem; min-height: 2.75rem; padding: 0 .5rem;
+  border: 1px solid var(--rs-accent); color: var(--rs-fg);
+  font: .8rem var(--rs-font-mono); text-decoration: none;
+  transition: background-color .2s, color .2s, box-shadow .2s;
+}
+.rs-nav-hex:hover, .rs-nav-hex:focus-visible {
+  background: var(--rs-accent); color: var(--rs-accent-fg); text-decoration: none;
+  box-shadow: 0 0 15px rgb(var(--rs-accent-rgb) / .6);
+}
+
+.rs-sidebar {
+  padding: 2rem 1.5rem; background: var(--rs-surface);
+  border-left: 1px solid rgb(var(--rs-accent-rgb) / .25);
+}
+@media (max-width: 64rem) {
+  .rs-sidebar { border-left: 0; border-top: 1px solid rgb(var(--rs-accent-rgb) / .25); }
+}
+.rs-widget-title {
+  font: .8rem var(--rs-font-mono); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--rs-muted); border-bottom: 1px solid var(--rs-line);
+  padding-bottom: .5rem; margin: 0 0 1rem;
+}
+
+/* Fragments: posts and records. */
+.rs-fragment {
+  background: rgb(var(--rs-surface-rgb) / .85); border: 1px solid rgb(var(--rs-accent-rgb) / .2);
+  padding: 2rem; margin-bottom: 3rem;
+}
+.rs-fragment-id {
+  display: block; margin-bottom: .75rem;
+  font: 700 .8rem var(--rs-font-mono); letter-spacing: .1em; color: var(--rs-accent);
+}
+.rs-title {
+  margin: 0 0 1.5rem; font-size: clamp(1.8rem, 5vw, 3.2rem); line-height: 1;
+  font-weight: 800; font-style: italic; text-transform: uppercase; letter-spacing: -.02em;
+  overflow-wrap: anywhere;
+}
+.rs-title a { color: var(--rs-fg); text-decoration: underline;
+  text-decoration-color: rgb(var(--rs-accent-rgb) / .35); text-underline-offset: .15em; }
+.rs-title a:hover { text-decoration-color: var(--rs-accent); }
+.rs-content {
+  border-left: 2px solid var(--rs-accent); padding-left: 1.5rem; line-height: 1.8;
+}
+.rs-content img { max-width: 100%; height: auto; border: 1px solid var(--rs-accent); padding: 4px; background: var(--rs-bg); }
+.rs-motto { font-style: italic; font-weight: 800; text-transform: uppercase; }
+
+/* Backgrounds and overlays: decoration only, never in the way of reading. */
+.rs-grid-bg {
+  background-image:
+    linear-gradient(rgb(var(--rs-accent-rgb) / .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--rs-accent-rgb) / .06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.rs-dots {
+  background-image: radial-gradient(rgb(var(--rs-accent-rgb) / .12) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+.rs-scanline {
+  position: fixed; left: 0; top: 0; width: 100%; height: 100px; z-index: 100; pointer-events: none;
+  background: linear-gradient(0deg, transparent, rgb(var(--rs-accent-rgb) / .05), transparent);
+  animation: rs-scan 10s linear infinite;
+}
+@keyframes rs-scan {
+  from { transform: translateY(-100px); }
+  to { transform: translateY(100vh); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rs-scanline { display: none; }
+  .rs-nav-hex { transition: none; }
+}
+
+/* Data: lists, tiles and cards that js/rs-data.js fills from JSON, or that a
+   page writes out itself. */
+.rs-feed { list-style: none; margin: 0; padding: 0; }
+.rs-feed li { border-bottom: 1px solid var(--rs-line); padding: .6rem 0; }
+.rs-feed .rs-kind { display: block; font: 700 .75rem var(--rs-font-mono); letter-spacing: .1em;
+  text-transform: uppercase; color: var(--rs-highlight); }
+.rs-feed a { color: var(--rs-fg); }
+.rs-feed a:hover { color: var(--rs-accent); }
+.rs-feed time, .rs-feed .rs-note { display: block; font-size: .8rem; color: var(--rs-muted); }
+.rs-tiles { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+.rs-tile { border: 1px solid var(--rs-line); padding: .75rem 1rem; background: var(--rs-surface); }
+.rs-tile b { display: block; font-size: 1.6rem; color: var(--rs-accent); }
+.rs-tile span { font-size: .8rem; color: var(--rs-muted); text-transform: uppercase; letter-spacing: .1em; }
+[aria-busy="true"] { opacity: .6; }
+.rs-data-error { color: var(--rs-accent); }
+
+/* Text for screen readers only (rs-scramble.js keeps the real words there). */
+.rs-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

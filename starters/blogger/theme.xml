@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!-- Blogger theme in the RedScope style (rs-tech-brandstyle @@RS_VERSION@@),
+     for blog.redscope.online: articles and news in the nexus, the terminal
+     look of the author's "Technomantic Nexus" drafts, made of the pack's
+     tokens and nexus.css. The Blog widget has its own markup (posts as
+     fragments); the side widgets keep Blogger's default markup. -->
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='0.2.0' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <title><data:view.title.escaped/></title>
+  <b:include data='blog' name='all-head-content'/>
+  <b:skin version='1.0.0'><![CDATA[
+@@RS_TOKENS_CSS@@
+
+@@RS_CSS:nexus@@
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--rs-bg); color: var(--rs-fg);
+  font: 16px/1.65 var(--rs-font-text);
+}
+a { color: var(--rs-accent); }
+a:hover { color: var(--rs-accent-hover); }
+.blog-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
+.blog-head svg { height: 3.5rem; width: auto; flex: none; }
+.blog-head .widget { margin: 0; }
+.blog-head h1 { margin: 0; font-size: 1.4rem; letter-spacing: .08em; text-transform: uppercase; }
+.blog-head h1 a { color: var(--rs-fg); text-decoration: none; }
+.blog-head .description { margin: .2rem 0 0; color: var(--rs-muted); }
+.rs-fragment .rs-cover { display: block; width: 100%; height: auto; margin-bottom: 1.5rem; border: 1px solid rgb(var(--rs-accent-rgb) / .3); }
+.rs-content pre, .rs-content code { font-family: var(--rs-font-mono); background: var(--rs-accent-soft); }
+.rs-content pre { padding: .75rem 1rem; overflow-x: auto; }
+.rs-content blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid var(--rs-highlight); color: var(--rs-muted); }
+.rs-labels { margin-top: 1.5rem; font-size: .85rem; }
+.rs-labels a { color: var(--rs-highlight); margin-right: .75rem; }
+.rs-more { display: inline-block; margin-top: 1rem; font-weight: 700; letter-spacing: .1em; }
+.rs-pager { display: flex; justify-content: space-between; gap: 1rem; }
+.rs-sidebar .widget { margin-bottom: 2.5rem; }
+.rs-sidebar .widget h2, .rs-sidebar .widget h3 {
+  font: .8rem var(--rs-font-mono); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--rs-muted); border-bottom: 1px solid var(--rs-line); padding-bottom: .5rem; margin: 0 0 1rem;
+}
+.rs-sidebar ul { list-style: none; margin: 0; padding: 0; }
+.rs-sidebar li { padding: .25rem 0; }
+.rs-sidebar a { color: var(--rs-fg); }
+.rs-sidebar a:hover { color: var(--rs-accent); }
+  ]]></b:skin>
+</head>
+<body>
+  <a class='rs-skip' href='#main'>Skip to the posts</a>
+  <div aria-hidden='true' class='rs-scanline'/>
+
+  <div class='rs-frame rs-dots'>
+    <div class='rs-status'>
+      <span><data:blog.title/> // signal online</span>
+      <span>RedScope Technologies</span>
+      <span>hex @@RS_COLOR:light.accent@@</span>
+    </div>
+
+    <div class='rs-nexus'>
+      <nav aria-label='Blog' class='rs-nav'>
+        <a aria-label='Home' class='rs-nav-hex' expr:href='data:blog.homepageUrl' title='Home'>[H]</a>
+        <a aria-label='Search' class='rs-nav-hex' expr:href='data:blog.homepageUrl + &quot;search&quot;' title='Search'>[S]</a>
+        <a aria-label='Feed (Atom)' class='rs-nav-hex' expr:href='data:blog.homepageUrl + &quot;feeds/posts/default&quot;' title='Feed'>[F]</a>
+        <a aria-label='www.redscope.pl' class='rs-nav-hex' href='https://www.redscope.pl/' title='www.redscope.pl'>[Ω]</a>
+      </nav>
+
+      <main class='rs-grid-bg' id='main' tabindex='-1'>
+        <header class='blog-head'>
+          <a aria-label='Home' expr:href='data:blog.homepageUrl'>@@RS_MARK_SVG@@</a>
+          <b:section class='header' id='header' maxwidgets='1' showaddelement='false'>
+            <b:widget id='Header1' locked='true' title='Header' type='Header' version='2'/>
+          </b:section>
+        </header>
+
+        <b:section class='main' id='posts' maxwidgets='1' showaddelement='false'>
+          <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2'>
+            <b:includable id='main' var='this'>
+              <b:loop values='data:posts' var='post'>
+                <article class='rs-fragment'>
+                  <span class='rs-fragment-id'>FRAGMENT #<data:post.id/> // <time expr:datetime='data:post.date.iso8601'><data:post.date/></time></span>
+                  <h2 class='rs-title'>
+                    <b:if cond='data:view.isSingleItem'>
+                      <span data-rs-scramble=''><data:post.title/></span>
+                    <b:else/>
+                      <a data-rs-scramble='' expr:href='data:post.url'><data:post.title/></a>
+                    </b:if>
+                  </h2>
+                  <div class='rs-content'>
+                    <b:if cond='data:view.isSingleItem'>
+                      <data:post.body/>
+                    <b:else/>
+                      <b:if cond='data:post.featuredImage'>
+                        <img alt='' class='rs-cover' expr:src='resizeImage(data:post.featuredImage, 960)' loading='lazy'/>
+                      </b:if>
+                      <p><data:post.snippets.long/></p>
+                      <a class='rs-more' expr:href='data:post.url'>READ THE FRAGMENT →</a>
+                    </b:if>
+                  </div>
+                  <b:if cond='data:post.labels'>
+                    <div class='rs-labels'>
+                      <b:loop values='data:post.labels' var='label'>
+                        <a expr:href='data:label.url' rel='tag'>#<data:label.name/></a>
+                      </b:loop>
+                    </div>
+                  </b:if>
+                </article>
+              </b:loop>
+
+              <nav aria-label='Pages' class='rs-pager'>
+                <b:if cond='data:newerPageUrl'>
+                  <a class='rs-nav-hex' expr:href='data:newerPageUrl'>← NEWER FRAGMENTS</a>
+                </b:if>
+                <b:if cond='data:olderPageUrl'>
+                  <a class='rs-nav-hex' expr:href='data:olderPageUrl'>OLDER FRAGMENTS →</a>
+                </b:if>
+              </nav>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </main>
+
+      <aside aria-label='Archive' class='rs-sidebar'>
+        <b:section class='sidebar' id='sidebar' showaddelement='true'>
+          <b:widget id='Label1' locked='false' title='Labels' type='Label' version='2'/>
+          <b:widget id='BlogArchive1' locked='false' title='Chronicles' type='BlogArchive' version='2'/>
+        </b:section>
+      </aside>
+    </div>
+
+    <footer class='rs-status rs-status--quiet'>
+      <span>© RedScope Technologies</span>
+      <span class='rs-motto'>"Code is the spell, logic is the catalyst"</span>
+    </footer>
+  </div>
+
+  <script>
+  //<![CDATA[
+@@RS_JS:rs-scramble@@
+  //]]>
+  </script>
+</body>
+</html>

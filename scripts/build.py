@@ -11,6 +11,12 @@ Usage: python scripts/build.py [--out DIR]   the pack
 - resources/ holds the images (all rights reserved). Icons and the light/dark
   logos are made from the masters there and committed; tests/check.py fails
   when they are stale. Icons are cut from the source PNG (Pillow), not the SVG.
+- starters/<name>/ are copied into starters/ of the pack with the brand put
+  in: the pack's files into the folder STARTERS names, and the placeholders
+  @@RS_TOKENS_CSS@@, @@RS_MARK_SVG@@, @@RS_VERSION@@,
+  @@RS_COLOR:<scheme>.<name>@@ (as #rrggbb), @@RS_CSS:<name>@@ (a stylesheet
+  of src/css/ without tokens) and @@RS_JS:<name>@@ (a script of src/js/)
+  replaced in their text files.
 - MANIFEST.sha256 lists every file; the tarball is reproducible (fixed mtime,
   owner and order), so a pinned release can be checked by its hash.
 """
@@ -38,6 +44,21 @@ NAME = "rs-tech-brandstyle"
 MARK_BOX = (200, 100, 800, 700)
 # First pixel row of the source logo below the eye (the words start there).
 MARK_BOTTOM = 620
+# Starters and where the pack's files go inside each (None: one-file themes,
+# which take the brand through placeholders only).
+STARTERS = {
+    "sphinx": "_static/brand",
+    "gitbook": "brand",
+    "tumblr": None,
+    "blogger": None,
+    "vue": "public/brand",
+    "react": "public/brand",
+    "astro": "public/brand",
+}
+# What a starter gets of the pack, and what it never takes from its source.
+STARTER_BRAND = ("css", "js", "icons", "images", "NOTICE.md")
+STARTER_SKIP = shutil.ignore_patterns("node_modules", "dist", "_build", ".astro", "brand")
+TEXT = {".html", ".xml", ".css", ".py", ".md", ".rst", ".json", ".js", ".mjs", ".jsx", ".vue", ".astro", ".yaml", ".txt"}
 
 
 def version() -> str:
@@ -65,7 +86,7 @@ def tokens_css(tokens: dict) -> str:
     for scheme in ("light", "dark"):
         for k, ref in tokens[scheme].items():
             fixed += [f"--rs-{scheme}-{k}{s}: var(--rs-{ref}{s});" for s in ("", "-rgb")]
-    fixed += [f"--rs-font-{k}: {v};" for k, v in tokens["font"].items()]
+    fixed += [f"--rs-font-{k}: {v};" for k, v in tokens["font"].items() if not k.startswith("$")]
     fixed += [f"--rs-radius-{k}: {v};" for k, v in tokens["radius"].items()]
 
     def follow(scheme: str) -> list[str]:
@@ -155,6 +176,34 @@ def render_resources(dest: Path) -> list[Path]:
     return sorted([*(dest / "icons").iterdir(), *(dest / "images/logo" / n for n in logos)])
 
 
+def placeholders(text: str, tokens: str) -> str:
+    mark = re.sub(r"<!--.*?-->\s*", "", (LOGO / "mark.svg").read_text(), flags=re.S).strip()
+    text = text.replace("@@RS_TOKENS_CSS@@", tokens).replace("@@RS_MARK_SVG@@", mark)
+    text = text.replace("@@RS_VERSION@@", version())
+    text = re.sub(r"@@RS_CSS:([a-z-]+)@@", lambda m: (SRC / "css" / f"{m.group(1)}.css").read_text(), text)
+    text = re.sub(r"@@RS_JS:([a-z-]+)@@", lambda m: (SRC / "js" / f"{m.group(1)}.js").read_text(), text)
+    return re.sub(
+        r"@@RS_COLOR:(light|dark)\.([a-z-]+)@@", lambda m: color(TOKENS[m.group(1)][m.group(2)]), text
+    )
+
+
+def starters(pack: Path, tokens: str) -> None:
+    for name, brand_dir in STARTERS.items():
+        target = pack / "starters" / name
+        shutil.copytree(ROOT / "starters" / name, target, ignore=STARTER_SKIP)
+        for f in sorted(target.rglob("*")):
+            if f.is_file() and f.suffix in TEXT:
+                f.write_text(placeholders(f.read_text(), tokens))
+        if brand_dir:
+            for part in STARTER_BRAND:
+                src = pack / part
+                if src.is_dir():
+                    shutil.copytree(src, target / brand_dir / part)
+                else:
+                    shutil.copyfile(src, target / brand_dir / part)
+    shutil.copyfile(ROOT / "starters/README.md", pack / "starters/README.md")
+
+
 def build(out: Path) -> Path:
     pack = out / NAME
     shutil.rmtree(pack, ignore_errors=True)
@@ -162,7 +211,9 @@ def build(out: Path) -> Path:
 
     tokens = tokens_css(TOKENS)
     (pack / "css/tokens.css").write_text(tokens)
-    (pack / "css/zone.css").write_text(with_tokens((SRC / "css/zone.css").read_text(), tokens))
+    for sheet in ("zone", "nexus"):
+        (pack / f"css/{sheet}.css").write_text(with_tokens((SRC / f"css/{sheet}.css").read_text(), tokens))
+    shutil.copytree(SRC / "js", pack / "js")
 
     # resources/ as it is (icons/, images/), with its notice; the legal notices
     # and the code's licence go along, so every copy carries them.
@@ -191,6 +242,8 @@ def build(out: Path) -> Path:
     ]:
         shutil.copyfile(pack / src_name, gitea_img / name)
     shutil.copyfile(pack / "images/backgrounds/flow-background.svg", pack / "authentik/flow-background.svg")
+
+    starters(pack, tokens)
 
     files = sorted(p for p in pack.rglob("*") if p.is_file())
     manifest = "".join(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(pack)}\n" for p in files)

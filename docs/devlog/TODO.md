@@ -19,8 +19,11 @@ What is being worked on now. Vision: [VISION.md](VISION.md). Questions:
 - [x] The palette: night, gray, white, red, crimson in shades (Q2)
 - [x] Images in `resources/` (icons, images, media apart), checked fresh;
       copyright and trademark notices in `docs/legal/`, carried by the pack (Q3)
-- [ ] The author looks at the pack again (`task preview`): the palette, the
-      traced logo
+- [x] The author looks at the pack again (`task preview`): "ready"
+      (2026-10-19). The logo and lettering will be redrawn soon, similar but
+      not the same (Q4)
+- [x] Font: terminal-like monospace from the system's fonts (Q4); holder
+      of rights: RedScope Technologies, author Sett Sarverott A.A.B. (Q10)
 - [ ] The first release `v0.1.0`: `cz bump`, tag, push (needs the author's
       go-ahead)
 
@@ -38,18 +41,47 @@ What is being worked on now. Vision: [VISION.md](VISION.md). Questions:
 
 ## Phase 3: starting packets (vision)
 
-Where they live: Q6.
+In `starters/<platform>/` here; each becomes a template repository once used
+for real (Q6). `task build` makes them ready to use in
+`dist/rs-tech-brandstyle/starters/`, with the pack's files put in.
 
-- [ ] GitHub Pages: a Vue, a React and an Astro starter with the pack's
-      tokens, logo, favicon, light/dark
-- [ ] Read the Docs: the theme of the chosen tool (Q7)
-- [ ] GitBook: the brand settings and files, with a guide (Q8)
-- [ ] Tumblr theme and Blogger theme (Q9)
+- [x] Read the Docs: Sphinx with Furo, `.readthedocs.yaml` (Q7)
+- [x] GitBook: the base customization, values and files to enter (Q8)
+- [x] Tumblr theme for `redscope.tumblr.com`, a blog of images (Q9)
+- [x] Blogger theme for `blog.redscope.online`, articles and news (Q9)
+- [x] GitHub Pages: a Vue, a React and an Astro starter with the pack's
+      tokens, logo, favicon, light/dark, deployed by a Pages workflow
+- [x] `task check` builds every starter that can be built off its
+      platform (Sphinx, Vue, React, Astro); Tumblr and Blogger checked
+      for well-formedness
+- [ ] Seen on each platform (needs the accounts, the author): a Read the
+      Docs project, the GitBook site, the Tumblr and Blogger themes
+      installed, a Pages repository from a starter; each starter's Status
+      line updated
 
 **Done when:** each starter builds in CI and was seen on its platform.
 
+## Phase 4: the nexus and data reading (third orders)
+
+- [x] The nexus: the drafts' elements as `css/nexus.css`, accessible
+- [x] `js/rs-data.js` (public JSON into lists and tiles) and
+      `js/rs-scramble.js`, unit-tested; `docs/preview-nexus.html`
+- [x] Blogger theme rebuilt as the nexus; Tumblr takes its frame
+- [x] Work for redscope-pl.github.io, redscope.pl, `.github`,
+      rs-tech-infra and gitrecon delegated (forge notes)
+- [ ] The drafts out of `starters/blogger/` (Q14)
+- [ ] Field test of the new Blogger theme on blog.redscope.online
+- [ ] `rs-data.js` on the real data, once gitrecon writes it (Q12)
+
+**Done when:** the blog runs the nexus theme and a page reads gitrecon's
+data with it.
+
 ## Later
 
-- [ ] A brand font (Q4)
-- [ ] An npm package of `css/` and the images for web projects like the
-      redscope.pl site (Q5)
+- [ ] npm packages for integrating the basic style, separate for Vue,
+      React, Astro and vanilla web projects (Q5: not now)
+- [ ] Read the Docs with MkDocs too (Q7)
+- [ ] The 3D background of the drafts, opt-in (Q13)
+- [ ] The new logo and lettering (Q4): replace the masters in
+      `resources/images/logo/`, the crop constants in `scripts/build.py`,
+      `task resources`

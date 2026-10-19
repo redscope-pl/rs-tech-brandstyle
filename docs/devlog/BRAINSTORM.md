@@ -3,68 +3,49 @@
 Open questions. Each has a *Lean:* (what an agent would do if told to pick)
 and gets a **Decision:** from the author. Agents don't settle them in code.
 
-## Q4: a brand font
 
-The words of the logo are lettering (a cut R, T, E), not a font the pages
-can use. Pages use the system font now.
+## Q11: what "accessible data reading" means
 
-- a) system fonts (no files, nothing to load)
-- b) a self-hosted open font close to the lettering (OFL)
+The third orders: "prepare this to handle accessible data reading". Read as
+both: (1) the pack reads public data (gitrecon's output in
+`redscope-pl/.github`) into pages, `js/rs-data.js`; (2) what it shows stays
+accessible (screen readers, keyboard, contrast, reduced motion).
 
-*Lean:* a) until there is a reason.
+*Lean:* both, as built; correct me if one of them was meant only.
 
-## Q5: npm package
+## Q12: where the gathered data lives, and its shape
 
-The old `package.json` named the pack for npm. Publishing to npm is outward
-and permanent.
+gitrecon (run by rs-tech-infra) gathers static data into `redscope-pl/.github`
+(public) and `redscope-pl/.github-private`. `.github-private` is the org's
+members-only profile repository: its files are not readable by the public or
+by a page's script without a token.
 
-*Lean:* not now; the tarball release is enough for the zone.
+- a) `.github/data/<source>.json` (public) plus `data/index.json` listing
+  them, each file an array of records as GitHub gives them; private data
+  only in `.github-private`, never read by public pages
+- b) the same, but the sites read the data at their build (GitHub Actions),
+  not in the visitor's browser
 
-## Q6: where the starting packets live
+*Lean:* a) for now (`rs-data.js` reads it live from
+`raw.githubusercontent.com`), b) once there is a lot of data.
 
-The vision asks for starting packets: GitBook, Read the Docs, GitHub Pages
-(Vue, React, Astro), Tumblr, Blogger.
+## Q13: the 3D background of the drafts
 
-- a) here, `starters/<platform>/`, each minimal, built and checked with the pack
-- b) one template repository per starter in the scope (GitHub "template
-  repository"), each pulling a pinned pack release
-- c) a) first, b) once a starter is used for real
+The drafts draw a turning wireframe icosahedron with three.js from a CDN.
+The pack loads nothing from outside, and three.js is ~600 KB.
 
-*Lean:* c): one place to keep them in step while the pack changes fast.
+*Lean:* later, as an opt-in script of the npm packages (Q5), off under
+reduced motion; not in the Blogger theme.
 
-## Q7: Read the Docs: which documentation tool
+## Q14: removing the Blogger drafts
 
-Read the Docs builds Sphinx and MkDocs (and others). Each needs its own theme.
+The orders say to remove `starters/blogger/draft-theme.xml` and
+`draft-homepage/` once taken into the pack (done). They are untracked: the
+agent's attempt to commit them first (to keep them in git history) was
+refused by its permission system, and deleting them unsaved would lose them.
 
-- a) MkDocs with Material (an `extra.css` and the logo)
-- b) Sphinx with Furo (CSS variables, light and dark)
-- c) both
+- a) the author deletes them (has copies elsewhere, e.g. AI Studio)
+- b) moved to `__WORKSHOP/craftbook/scrapnotes/` (BOS: drafts of the author)
+- c) the author commits them once, then an agent removes them
 
-*Lean:* a): Markdown like the rest of our docs; Material has light/dark and
-takes CSS variables.
-
-## Q8: GitBook
-
-Hosted GitBook takes the brand through its settings (primary colour, logo,
-favicon, fonts from a list), not through CSS. The packet would be the values
-and files to enter, and a guide.
-
-*Lean:* that, unless there is a self-hosted GitBook (legacy CLI) in use.
-
-## Q9: Tumblr and Blogger blogs
-
-Which blogs will wear the themes (their addresses), and what they publish
-(text, pictures, both)? A theme is tried only by installing it on a blog,
-which needs the account owner.
-
-*Lean:* full minimal themes (Tumblr HTML with its blocks, Blogger XML), light
-and dark from the visitor's scheme; the author installs them on a test blog
-first.
-
-## Q10: the copyright holder
-
-The notices say "© Sett Sarverott A.A.B. (RedScope Technologies)". Is
-RedScope Technologies a registered business that should hold the rights
-itself (its full legal name, registry number)?
-
-*Lean:* keep the wording until the author names the entity.
+*Lean:* b).

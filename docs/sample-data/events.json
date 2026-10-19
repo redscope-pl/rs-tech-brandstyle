@@ -1,0 +1,13 @@
+{
+  "$comment": "Sample data for docs/preview-nexus.html: the shape of GitHub's public events, as gitrecon gathers them. Not real activity.",
+  "stats": [
+    { "label": "repositories", "value": 18 },
+    { "label": "events this week", "value": 42 },
+    { "label": "starters", "value": 7 }
+  ],
+  "events": [
+    { "type": "PushEvent", "repo": { "name": "redscope-pl/rs-tech-brandstyle", "url": "https://github.com/redscope-pl/rs-tech-brandstyle" }, "created_at": "2026-10-19T18:20:00Z" },
+    { "type": "ReleaseEvent", "repo": { "name": "redscope-pl/rs-tech-infra", "url": "https://github.com/redscope-pl/rs-tech-infra" }, "created_at": "2026-10-18T09:05:00Z" },
+    { "type": "IssuesEvent", "repo": { "name": "redscope-pl/redscope.pl", "url": "javascript:alert('not a link')" }, "created_at": "2026-10-17T21:40:00Z" }
+  ]
+}
