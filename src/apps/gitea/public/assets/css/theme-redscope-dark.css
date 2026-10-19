@@ -1,0 +1,45 @@
+/* Gitea: the RedScope theme, dark. Gitea lists every theme-*.css in
+   custom/public/assets/css/ by itself (1.21+). Built on Gitea's own
+   dark theme; only the brand colours change. */
+@import "./theme-gitea-dark.css";
+
+gitea-theme-meta-info {
+  --theme-display-name: "RedScope (dark)";
+}
+
+:root {
+  --color-primary: var(--rs-dark-accent);
+  --color-primary-contrast: var(--rs-dark-accent-fg);
+  --color-primary-hover: var(--rs-dark-accent-hover);
+  --color-primary-active: var(--rs-dark-accent-hover);
+  --color-primary-dark-1: color-mix(in srgb, var(--color-primary), #000 8%);
+  --color-primary-dark-2: color-mix(in srgb, var(--color-primary), #000 16%);
+  --color-primary-dark-3: color-mix(in srgb, var(--color-primary), #000 24%);
+  --color-primary-dark-4: color-mix(in srgb, var(--color-primary), #000 32%);
+  --color-primary-dark-5: color-mix(in srgb, var(--color-primary), #000 40%);
+  --color-primary-dark-6: color-mix(in srgb, var(--color-primary), #000 48%);
+  --color-primary-dark-7: color-mix(in srgb, var(--color-primary), #000 56%);
+  --color-primary-light-1: color-mix(in srgb, var(--color-primary), #fff 12%);
+  --color-primary-light-2: color-mix(in srgb, var(--color-primary), #fff 24%);
+  --color-primary-light-3: color-mix(in srgb, var(--color-primary), #fff 36%);
+  --color-primary-light-4: color-mix(in srgb, var(--color-primary), #fff 48%);
+  --color-primary-light-5: color-mix(in srgb, var(--color-primary), #fff 60%);
+  --color-primary-light-6: color-mix(in srgb, var(--color-primary), #fff 72%);
+  --color-primary-light-7: color-mix(in srgb, var(--color-primary), #fff 84%);
+  --color-primary-alpha-10: rgb(var(--rs-dark-accent-rgb) / .10);
+  --color-primary-alpha-20: rgb(var(--rs-dark-accent-rgb) / .20);
+  --color-primary-alpha-30: rgb(var(--rs-dark-accent-rgb) / .30);
+  --color-primary-alpha-40: rgb(var(--rs-dark-accent-rgb) / .40);
+  --color-primary-alpha-50: rgb(var(--rs-dark-accent-rgb) / .50);
+  --color-primary-alpha-60: rgb(var(--rs-dark-accent-rgb) / .60);
+  --color-primary-alpha-70: rgb(var(--rs-dark-accent-rgb) / .70);
+  --color-primary-alpha-80: rgb(var(--rs-dark-accent-rgb) / .80);
+  --color-primary-alpha-90: rgb(var(--rs-dark-accent-rgb) / .90);
+  --color-body: var(--rs-dark-bg);
+  --color-box-body: var(--rs-dark-surface);
+  --color-text: var(--rs-dark-fg);
+  --color-text-light-2: var(--rs-dark-muted);
+  --color-secondary: var(--rs-dark-line);
+  --fonts-proportional: var(--rs-font-sans);
+  --fonts-monospace: var(--rs-font-mono);
+}

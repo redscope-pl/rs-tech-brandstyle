@@ -1,0 +1,35 @@
+/* The zone's own pages (welcome pages, error pages): plain HTML, no outside
+   resources. The class names follow rs-tech-infra config/pages/matrix/. */
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--rs-bg); color: var(--rs-fg);
+  font: 16px/1.55 var(--rs-font-sans);
+}
+main { max-width: 46rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+h1 { font-size: 1.7rem; font-weight: 600; margin: 0 0 .25rem; }
+h2 { font-size: 1.05rem; font-weight: 600; margin: 2.5rem 0 .75rem; }
+p { margin: .5rem 0; }
+a { color: var(--rs-accent); text-decoration: none; }
+a:hover { color: var(--rs-accent-hover); text-decoration: underline; }
+.muted { color: var(--rs-muted); }
+code {
+  background: var(--rs-accent-soft); color: var(--rs-fg); padding: .1rem .4rem;
+  border-radius: var(--rs-radius-sm); font: .95em var(--rs-font-mono);
+}
+.brand { display: block; height: 3rem; margin-bottom: 1.5rem; }
+.grid { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+.card {
+  background: var(--rs-surface); border: 1px solid var(--rs-line);
+  border-radius: var(--rs-radius-md); padding: 1rem 1.1rem;
+}
+.card .for { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--rs-muted); }
+.card .name { font-weight: 600; font-size: 1.1rem; margin: .1rem 0 .4rem; }
+.card a { display: inline-block; margin: .15rem .6rem 0 0; }
+.card .note { font-size: .85rem; color: var(--rs-muted); margin-top: .4rem; }
+.button {
+  display: inline-block; background: var(--rs-accent); color: var(--rs-accent-fg);
+  border-radius: var(--rs-radius-sm); padding: .5rem 1rem; font-weight: 600;
+}
+.button:hover { background: var(--rs-accent-hover); color: var(--rs-accent-fg); text-decoration: none; }
+ol { padding-left: 1.2rem; }
+footer { margin-top: 3rem; font-size: .85rem; }

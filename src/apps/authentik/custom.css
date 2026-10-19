@@ -1,0 +1,18 @@
+/* Authentik: the brand's "Custom CSS" (branding_custom_css of a brand).
+   Authentik's pages are PatternFly 4 in shadow DOM; custom properties set on
+   :root reach inside, so the theme is colours only. Not yet tried on the
+   zone's Authentik (rs-tech-infra TODO Phase 8). */
+:root {
+  --ak-accent: var(--rs-accent);
+  --pf-global--primary-color--100: var(--rs-accent);
+  --pf-global--primary-color--200: var(--rs-accent-hover);
+  --pf-global--primary-color--dark-100: var(--rs-accent-hover);
+  --pf-global--link--Color: var(--rs-accent);
+  --pf-global--link--Color--hover: var(--rs-accent-hover);
+  --pf-global--active-color--100: var(--rs-accent);
+  --pf-global--FontFamily--sans-serif: var(--rs-font-sans);
+  --pf-global--FontFamily--heading--sans-serif: var(--rs-font-sans);
+  --pf-global--FontFamily--monospace: var(--rs-font-mono);
+  --ak-dark-background: var(--rs-dark-bg);
+  --ak-dark-background-light: var(--rs-dark-surface);
+}

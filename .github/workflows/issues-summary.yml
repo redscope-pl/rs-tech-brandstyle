@@ -20,14 +20,16 @@ jobs:
         id: inference
         uses: actions/ai-inference@v1
         with:
+          # The issue is untrusted input: it reaches the model as data, and the
+          # answer reaches the shell only through an environment variable.
           prompt: |
             Summarize the following GitHub issue in one paragraph:
-            Title: ${{ github.event.issue.title }}
-            Body: ${{ github.event.issue.body }}
+            Title: ${{ toJSON(github.event.issue.title) }}
+            Body: ${{ toJSON(github.event.issue.body) }}
 
       - name: Comment with AI summary
         run: |
-          gh issue comment $ISSUE_NUMBER --body '${{ steps.inference.outputs.response }}'
+          gh issue comment "$ISSUE_NUMBER" --body "$RESPONSE"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}

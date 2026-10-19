@@ -1,15 +1,26 @@
-[tool.poetry]
+[project]
 name = "rs-tech-brandstyle"
 version = "0.1.0"
-description = "RedScope Technologies brand style bundle"
-authors = ["Sett Sarverott <sarverott@gmail.com>"]
-license = "CC BY-SA 4.0"
-readme = "README.md"
+description = "The RedScope Technologies style pack: logo, colours, fonts and per-app themes"
+requires-python = ">=3.12"
+dependencies = [
+    "pillow>=12.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.12"
+[dependency-groups]
+dev = [
+    "commitizen>=4.19.2",
+    "go-task-bin>=3.54.0",
+    "lefthook>=2.2.2",
+    "yamllint>=1.38.0",
+]
 
+[tool.uv]
+package = false
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.commitizen]
+name = "cz_conventional_commits"
+version_provider = "uv"
+tag_format = "v$version"
+update_changelog_on_bump = true
+major_version_zero = true

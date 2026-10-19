@@ -1,0 +1,15 @@
+/* Vaultwarden: the web vault's own CSS (TEMPLATES_FOLDER/scss/, Vaultwarden
+   1.33+), added after its defaults. The web vault's colours are Tailwind
+   variables holding "r g b". Not yet tried on the zone's Vaultwarden. */
+.theme_light {
+  --color-primary-300: var(--rs-light-accent-soft-rgb);
+  --color-primary-600: var(--rs-light-accent-rgb);
+  --color-primary-700: var(--rs-light-accent-hover-rgb);
+}
+.theme_dark {
+  --color-primary-300: var(--rs-dark-accent-hover-rgb);
+  --color-primary-600: var(--rs-dark-accent-rgb);
+  --color-primary-700: var(--rs-dark-accent-hover-rgb);
+  --color-background: var(--rs-dark-bg-rgb);
+  --color-background-alt: var(--rs-dark-surface-rgb);
+}
