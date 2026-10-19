@@ -37,6 +37,35 @@ crimson accent.
 Images and media of the pack are all rights reserved (`NOTICE.md`): fine for
 our own pages, not for others to reuse.
 
+## The nexus and data reading
+
+Status: in the Blogger and Tumblr themes; seen in `docs/preview-nexus.html`.
+
+`css/nexus.css` (tokens included) is the terminal look of the author's
+"Technomantic Nexus" drafts as opt-in classes: `rs-frame` and `rs-status`
+(the red frame and its status lines), `rs-nexus` with `rs-nav`/`rs-nav-hex`,
+`main` and `rs-sidebar` (one column under 64rem), `rs-fragment`,
+`rs-fragment-id`, `rs-title`, `rs-content`, backgrounds `rs-grid-bg`,
+`rs-dots`, `rs-scanline`, a skip link `rs-skip`, and data blocks `rs-feed`,
+`rs-tiles`. Motion stops under `prefers-reduced-motion`.
+
+`js/rs-data.js` fills a list or tiles from public JSON (e.g. what gitrecon
+gathers into `redscope-pl/.github`), described by `data-rs-*` attributes:
+
+```html
+<ul class="rs-feed" data-rs-src="https://raw.githubusercontent.com/redscope-pl/.github/master/data/events.json"
+    data-rs-title="repo.name" data-rs-url="repo.url" data-rs-date="created_at" data-rs-kind="type">
+  <li>What shows without script or data.</li>
+</ul>
+<script src="/brand/js/rs-data.js"></script>
+```
+
+It writes text, never HTML; links only `http(s)`; `aria-busy` while loading;
+a `role="status"` note when the data can't be read, keeping what was there.
+`js/rs-scramble.js` settles the letters of `data-rs-scramble` elements out
+of noise; screen readers get the real words, reduced motion gets none of it.
+(The address above is an example: the data's place is not decided, Q12.)
+
 ## Authentik
 
 Status: not yet tried (rs-tech-infra TODO Phase 8).

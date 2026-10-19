@@ -61,11 +61,27 @@ for real (Q6). `task build` makes them ready to use in
 
 **Done when:** each starter builds in CI and was seen on its platform.
 
+## Phase 4: the nexus and data reading (third orders)
+
+- [x] The nexus: the drafts' elements as `css/nexus.css`, accessible
+- [x] `js/rs-data.js` (public JSON into lists and tiles) and
+      `js/rs-scramble.js`, unit-tested; `docs/preview-nexus.html`
+- [x] Blogger theme rebuilt as the nexus; Tumblr takes its frame
+- [x] Work for redscope-pl.github.io, redscope.pl, `.github`,
+      rs-tech-infra and gitrecon delegated (forge notes)
+- [ ] The drafts out of `starters/blogger/` (Q14)
+- [ ] Field test of the new Blogger theme on blog.redscope.online
+- [ ] `rs-data.js` on the real data, once gitrecon writes it (Q12)
+
+**Done when:** the blog runs the nexus theme and a page reads gitrecon's
+data with it.
+
 ## Later
 
 - [ ] npm packages for integrating the basic style, separate for Vue,
       React, Astro and vanilla web projects (Q5: not now)
 - [ ] Read the Docs with MkDocs too (Q7)
+- [ ] The 3D background of the drafts, opt-in (Q13)
 - [ ] The new logo and lettering (Q4): replace the masters in
       `resources/images/logo/`, the crop constants in `scripts/build.py`,
       `task resources`

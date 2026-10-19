@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- The nexus (css/nexus.css, js/) as the Blogger theme lays it out, with sample
+     posts and data read by rs-data.js from sample-data/events.json. Needs dist/
+     (`task build`) and http (`task preview`); ?theme=light|dark forces a scheme. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RedScope nexus</title>
+<link rel="icon" href="../dist/rs-tech-brandstyle/icons/favicon.ico">
+<link rel="stylesheet" href="../dist/rs-tech-brandstyle/css/nexus.css">
+<script>
+  const t = new URLSearchParams(location.search).get("theme");
+  if (t) document.documentElement.dataset.theme = t;
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--rs-bg); color: var(--rs-fg); font: 16px/1.65 var(--rs-font-text); }
+  a { color: var(--rs-accent); }
+  .blog-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
+  .blog-head img { height: 3.5rem; }
+  .blog-head h1 { margin: 0; font-size: 1.4rem; letter-spacing: .08em; text-transform: uppercase; }
+  .blog-head p { margin: .2rem 0 0; color: var(--rs-muted); }
+  .rs-sidebar section { margin-bottom: 2.5rem; }
+</style>
+</head>
+<body>
+<a class="rs-skip" href="#main">Skip to the posts</a>
+<div aria-hidden="true" class="rs-scanline"></div>
+<div class="rs-frame rs-dots">
+  <div class="rs-status">
+    <span>RedScope blog // signal online</span>
+    <span>RedScope Technologies</span>
+    <span>hex #b11020</span>
+  </div>
+  <div class="rs-nexus">
+    <nav aria-label="Blog" class="rs-nav">
+      <a class="rs-nav-hex" href="#" title="Home" aria-label="Home">[H]</a>
+      <a class="rs-nav-hex" href="#" title="Search" aria-label="Search">[S]</a>
+      <a class="rs-nav-hex" href="#" title="Feed" aria-label="Feed">[F]</a>
+      <a class="rs-nav-hex" href="#" title="www.redscope.pl" aria-label="www.redscope.pl">[Ω]</a>
+    </nav>
+    <main class="rs-grid-bg" id="main" tabindex="-1">
+      <header class="blog-head">
+        <img src="../dist/rs-tech-brandstyle/images/logo/mark.svg" alt="">
+        <div><h1>RedScope blog</h1><p>Articles and news of RedScope Technologies.</p></div>
+      </header>
+      <article class="rs-fragment">
+        <span class="rs-fragment-id">FRAGMENT #7140 // <time datetime="2026-10-19">19 Oct 2026</time></span>
+        <h2 class="rs-title"><a data-rs-scramble href="#">The style pack goes live</a></h2>
+        <div class="rs-content">
+          <p>One source of the brand, built into files every page can take: the palette of night,
+            gray, white, red and crimson, the eye, and themes for the places we publish.</p>
+          <a class="rs-nav-hex" href="#">READ THE FRAGMENT →</a>
+        </div>
+      </article>
+      <article class="rs-fragment">
+        <span class="rs-fragment-id">FRAGMENT #7139 // <time datetime="2026-10-12">12 Oct 2026</time></span>
+        <h2 class="rs-title"><a data-rs-scramble href="#">A zone of our own</a></h2>
+        <div class="rs-content"><p>Identity, git, mail and chat on our own host.</p></div>
+      </article>
+    </main>
+    <aside aria-label="Archive" class="rs-sidebar">
+      <section>
+        <h2 class="rs-widget-title">Signal</h2>
+        <div class="rs-tiles" data-rs-src="sample-data/events.json" data-rs-from="stats"
+             data-rs-view="tiles" data-rs-value="value" data-rs-title="label"></div>
+      </section>
+      <section>
+        <h2 class="rs-widget-title">Last actions</h2>
+        <ul class="rs-feed" data-rs-src="sample-data/events.json" data-rs-from="events"
+            data-rs-title="repo.name" data-rs-url="repo.url" data-rs-date="created_at" data-rs-kind="type">
+          <li>Activity of redscope-pl on GitHub.</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+  <footer class="rs-status rs-status--quiet">
+    <span>© RedScope Technologies</span>
+    <span class="rs-motto">"Code is the spell, logic is the catalyst"</span>
+  </footer>
+</div>
+<script src="../dist/rs-tech-brandstyle/js/rs-data.js"></script>
+<script src="../dist/rs-tech-brandstyle/js/rs-scramble.js"></script>
+</body>
+</html>

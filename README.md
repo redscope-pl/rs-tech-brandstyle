@@ -16,6 +16,7 @@ hand.
 | ---------------------------- | -------------------------------------------------------------- |
 | `css/tokens.css`             | The palette (night, gray, white, red, crimson in shades), fonts, radii as CSS variables (`--rs-*`), light + dark |
 | `css/zone.css`               | Base style of the zone's own HTML pages (tokens included)       |
+| `css/nexus.css`, `js/`       | The nexus (terminal look: frame, status lines, fragments) and the data reader `rs-data.js`, `rs-scramble.js` |
 | `images/logo/`               | The eye (`mark.svg`), the words, both together (light, dark)    |
 | `icons/`                     | App icons, favicons (PNG, ICO), the eye as a transparent PNG    |
 | `images/backgrounds/`        | Backgrounds (Authentik's flows)                                 |
@@ -26,8 +27,9 @@ hand.
 | `LICENSE`, `NOTICE.md`, `legal/` | MPL-2.0 for the code; images all rights reserved; copyright and trademark notices |
 
 How each app takes its part: [docs/usage.md](docs/usage.md).
-`task preview` opens [docs/preview.html](docs/preview.html), a page showing
-the built pack.
+`task preview` serves [docs/preview.html](docs/preview.html) (the pack) and
+[docs/preview-nexus.html](docs/preview-nexus.html) (the nexus with sample
+data) on <http://localhost:8765>.
 
 ## Working on it
 

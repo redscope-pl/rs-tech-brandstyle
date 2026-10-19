@@ -13,6 +13,8 @@
 <style>
 @@RS_TOKENS_CSS@@
 
+@@RS_CSS:nexus@@
+
 * { box-sizing: border-box; }
 body {
   margin: 0; background: var(--rs-bg); color: var(--rs-fg);
@@ -20,7 +22,7 @@ body {
 }
 a { color: var(--rs-accent); text-decoration: none; }
 a:hover { color: var(--rs-accent-hover); text-decoration: underline; }
-header, main, nav.pages, footer { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+header, main, nav.pages { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
 header { display: flex; align-items: center; gap: 1rem; padding-top: 2rem; padding-bottom: 1.5rem; }
 header svg { height: 3rem; width: auto; flex: none; }
 header h1 { font-size: 1.4rem; margin: 0; letter-spacing: .04em; }
@@ -40,10 +42,18 @@ header p { margin: .2rem 0 0; color: var(--rs-muted); }
 .tags a { color: var(--rs-highlight); margin-right: .5rem; }
 .permalink .grid { grid-template-columns: 1fr; max-width: 48rem; margin: 0 auto; }
 nav.pages { display: flex; justify-content: space-between; padding-top: 2rem; padding-bottom: 2rem; }
-footer { color: var(--rs-muted); font-size: .8rem; padding-bottom: 2rem; }
+main { flex: 1; width: 100%; }
+.meta .rs-fragment-id { margin: 0; font-size: .75rem; }
 </style>
 </head>
 <body class="{block:PermalinkPage}permalink{/block:PermalinkPage}">
+<a class="rs-skip" href="#main">Skip to the posts</a>
+<div class="rs-frame rs-dots">
+<div class="rs-status">
+  <span>{Title} // signal online</span>
+  <span>RedScope Technologies</span>
+  <span>hex @@RS_COLOR:light.accent@@</span>
+</div>
 <header>
   <a href="/" aria-label="{Title}">@@RS_MARK_SVG@@</a>
   <div>
@@ -52,7 +62,7 @@ footer { color: var(--rs-muted); font-size: .8rem; padding-bottom: 2rem; }
   </div>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
   <div class="grid">
   {block:Posts}
     <article class="post">
@@ -84,7 +94,7 @@ footer { color: var(--rs-muted); font-size: .8rem; padding-bottom: 2rem; }
         {block:Caption}<div class="body">{Caption}</div>{/block:Caption}
       {/block:Video}
       <div class="meta">
-        {block:Date}<a href="{Permalink}">{DayOfMonth} {Month} {Year}</a>{/block:Date}
+        <span class="rs-fragment-id">FRAGMENT #{PostID}{block:Date} // <a href="{Permalink}">{DayOfMonth} {Month} {Year}</a>{/block:Date}</span>
         {block:HasTags}<div class="tags">{block:Tags}<a href="{TagURL}">#{Tag}</a>{/block:Tags}</div>{/block:HasTags}
       </div>
     </article>
@@ -106,8 +116,10 @@ footer { color: var(--rs-muted); font-size: .8rem; padding-bottom: 2rem; }
 </nav>
 {/block:PermalinkPagination}
 
-<footer>
-  © RedScope Technologies · images all rights reserved
+<footer class="rs-status rs-status--quiet">
+  <span>© RedScope Technologies · images all rights reserved</span>
+  <span class="rs-motto">"Code is the spell, logic is the catalyst"</span>
 </footer>
+</div>
 </body>
 </html>

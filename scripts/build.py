@@ -13,8 +13,10 @@ Usage: python scripts/build.py [--out DIR]   the pack
   when they are stale. Icons are cut from the source PNG (Pillow), not the SVG.
 - starters/<name>/ are copied into starters/ of the pack with the brand put
   in: the pack's files into the folder STARTERS names, and the placeholders
-  @@RS_TOKENS_CSS@@, @@RS_MARK_SVG@@, @@RS_VERSION@@ and
-  @@RS_COLOR:<scheme>.<name>@@ (as #rrggbb) replaced in their text files.
+  @@RS_TOKENS_CSS@@, @@RS_MARK_SVG@@, @@RS_VERSION@@,
+  @@RS_COLOR:<scheme>.<name>@@ (as #rrggbb), @@RS_CSS:<name>@@ (a stylesheet
+  of src/css/ without tokens) and @@RS_JS:<name>@@ (a script of src/js/)
+  replaced in their text files.
 - MANIFEST.sha256 lists every file; the tarball is reproducible (fixed mtime,
   owner and order), so a pinned release can be checked by its hash.
 """
@@ -54,7 +56,7 @@ STARTERS = {
     "astro": "public/brand",
 }
 # What a starter gets of the pack, and what it never takes from its source.
-STARTER_BRAND = ("css", "icons", "images", "NOTICE.md")
+STARTER_BRAND = ("css", "js", "icons", "images", "NOTICE.md")
 STARTER_SKIP = shutil.ignore_patterns("node_modules", "dist", "_build", ".astro", "brand")
 TEXT = {".html", ".xml", ".css", ".py", ".md", ".rst", ".json", ".js", ".mjs", ".jsx", ".vue", ".astro", ".yaml", ".txt"}
 
@@ -178,6 +180,8 @@ def placeholders(text: str, tokens: str) -> str:
     mark = re.sub(r"<!--.*?-->\s*", "", (LOGO / "mark.svg").read_text(), flags=re.S).strip()
     text = text.replace("@@RS_TOKENS_CSS@@", tokens).replace("@@RS_MARK_SVG@@", mark)
     text = text.replace("@@RS_VERSION@@", version())
+    text = re.sub(r"@@RS_CSS:([a-z-]+)@@", lambda m: (SRC / "css" / f"{m.group(1)}.css").read_text(), text)
+    text = re.sub(r"@@RS_JS:([a-z-]+)@@", lambda m: (SRC / "js" / f"{m.group(1)}.js").read_text(), text)
     return re.sub(
         r"@@RS_COLOR:(light|dark)\.([a-z-]+)@@", lambda m: color(TOKENS[m.group(1)][m.group(2)]), text
     )
@@ -207,7 +211,9 @@ def build(out: Path) -> Path:
 
     tokens = tokens_css(TOKENS)
     (pack / "css/tokens.css").write_text(tokens)
-    (pack / "css/zone.css").write_text(with_tokens((SRC / "css/zone.css").read_text(), tokens))
+    for sheet in ("zone", "nexus"):
+        (pack / f"css/{sheet}.css").write_text(with_tokens((SRC / f"css/{sheet}.css").read_text(), tokens))
+    shutil.copytree(SRC / "js", pack / "js")
 
     # resources/ as it is (icons/, images/), with its notice; the legal notices
     # and the code's licence go along, so every copy carries them.

@@ -31,12 +31,17 @@ tasks:
 
   check:
     desc: Run every static check (same as CI)
-    deps: [check:pack, check:starters, check:yaml, check:commits]
+    deps: [check:pack, check:js, check:starters, check:yaml, check:commits]
 
   check:pack:
     desc: Check tokens, contrast, SVGs, resources/ and two builds of the pack
     cmds:
       - uv run --frozen python -I tests/check.py
+
+  check:js:
+    desc: Unit-test the pack's scripts (node --test)
+    cmds:
+      - node --test 'tests/js/*.test.cjs'
 
   check:starters:
     desc: Build the Sphinx, Vue, React and Astro starters from a fresh pack (needs npm)
@@ -54,7 +59,8 @@ tasks:
       - uv run --frozen cz check --rev-range {{.COMMITS_FROM}}..HEAD
 
   preview:
-    desc: Build, then open the preview page of the pack (docs/preview.html)
+    desc: Build, then serve the preview pages (docs/preview.html, preview-nexus.html) on http://localhost:8765
     deps: [build]
     cmds:
-      - xdg-open docs/preview.html
+      - echo "http://localhost:8765/docs/preview.html  http://localhost:8765/docs/preview-nexus.html  (Ctrl+C stops)"
+      - python3 -I -m http.server 8765 --bind 127.0.0.1

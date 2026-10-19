@@ -218,3 +218,46 @@ itself (its full legal name, registry number)?
 - Q10: notices name RedScope Technologies (a business in preparation) as
   the holder and Sett Sarverott A.A.B. as the author, exercising the rights
   until the entity exists.
+
+## UNIXUSAT=1792444989562 · commit 85e6f5e
+
+### The author's orders, third batch (word for word)
+
+> ## additional thoughts
+>
+> prepare this to handle accessible data reading, delegate work topics for further development around other repos accordingly as BOS rules guides us to do
+>
+> - after build and checking out while fieldtests: https://blog.redscope.online/
+>     - theme is unoptimalized there so i added old work drafts for blogger to be improved. adopt some of these elements there into unified pack of stylization and remove drafts in starters/blogger dir
+> - https://github.com/redscope-pl/redscope-pl.github.io
+>     - here we can upt products of our brandstyle building
+>     - look for inspiration of mechanics implemented here: https://github.com/Sarverott/sarverott.github.io
+>     - we want to take static data with gitrecon (https://github.com/Sarverott/gitrecon) by rs-tech-infra that will place that gathered info in https://github.com/redscope-pl/.github and https://github.com/redscope-pl/.github-private to be accessed publicly
+> - https://github.com/redscope-pl/redscope.pl
+>     - here is main page of redscope.
+>     - content in markdown and settings for this website taked from https://github.com/redscope-pl/.github (package.json import with no npm publishing)
+
+### What was done with them
+
+- The nexus: the elements of the author's Blogger drafts (`draft-theme.xml`,
+  the "Technomantic Nexus" app) became `src/css/nexus.css`: frame, status
+  lines, `[X]` navigation, fragments with their `#id // date`, big italic
+  titles, archive sidebar, grid and dot backgrounds, scanline, the motto.
+  Made of tokens, accessible (contrast, focus, skip link, reduced motion,
+  one column on small screens). Left out: Google Fonts and three.js from a
+  CDN (Q13); the colour switcher and fake terminal of the app.
+- The Blogger theme rebuilt as the nexus, with its own Blog widget markup
+  (the field test on blog.redscope.online found the first one
+  unoptimized); the Tumblr theme takes the frame and status lines.
+- "Accessible data reading" (read as two things, Q11): `src/js/rs-data.js`
+  reads public JSON into lists and tiles, text only, http(s) links only,
+  `aria-busy` and a status note on failure; `rs-scramble.js` keeps the real
+  words for screen readers. Seen in `docs/preview-nexus.html` with sample
+  data; unit tests in `tests/js/`.
+- Work for other repositories delegated in
+  `forge/NOTES-for-repositories.md`: redscope-pl.github.io, redscope.pl,
+  `.github` and `.github-private`, rs-tech-infra (running gitrecon),
+  gitrecon (the static export).
+- The drafts were **not** removed: committing them first was refused by the
+  agent's permission system, and they are untracked, so deleting them would
+  lose them (Q14).
